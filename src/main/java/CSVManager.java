@@ -103,8 +103,22 @@ public class CSVManager {
             tableData.add(recordStr);
         }
 
+        ArrayList<String> allHeaders = new ArrayList<>();
+        allHeaders.add("A");
+        allHeaders.add("B");
+        allHeaders.add("C");
+        allHeaders.add("D");
+
+        ArrayList<String> setHeaders = new ArrayList<>();
+        setHeaders.add("C");
+
+
 
         tableData.set(1,new String[]{"Mani","Teja","Varma","K"});
+
+        for(String[] row: tableData){
+
+        }
 
         //write to file
         BufferedWriter writer = Files.newBufferedWriter(Paths.get("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv"),StandardOpenOption.WRITE);
