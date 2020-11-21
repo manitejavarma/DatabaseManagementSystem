@@ -1,7 +1,12 @@
+import java.util.logging.Logger;
 
+import utils.Constants;
 
 public class App {
+	private final static Logger logger = Logger.getLogger(App.class.getName());
     public static void main(String[] args){
-        System.out.println("Hello World!");
+    	logger.info("Application started");
+        ISqlParser parser = new SqlParser();
+        logger.info("Response "+parser.validateQuery(Constants.QUERY));
     }
 }
