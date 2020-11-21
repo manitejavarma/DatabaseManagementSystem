@@ -39,7 +39,6 @@ public class NewCSVManager {
                     }
                 }
             }
-            //Mani, fix this
         table.write().csv(filepath);
     }
 
