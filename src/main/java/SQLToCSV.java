@@ -4,12 +4,18 @@ import java.util.HashMap;
 
 public class SQLToCSV {
 
+    NewCSVManager newCSVManager;
+
+    SQLToCSV(){
+        newCSVManager = new NewCSVManager();
+    }
+
     public void insertQuery(String tablename) throws IOException {
         HashMap<String,String> columnsAndValues = new HashMap<>();
         columnsAndValues.put("A","Mani");
         columnsAndValues.put("C","Teja");
         columnsAndValues.put("D","Varma");
-        NewCSVManager.insertCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+tablename+".csv",columnsAndValues);
+        newCSVManager.insertCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+tablename+".csv",columnsAndValues);
     }
 
     public void doAction() throws IOException {
@@ -22,13 +28,13 @@ public class SQLToCSV {
         columns.add("B");
         columns.add("C");
         columns.add("D");
-        NewCSVManager.readCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",conditions,columns);
+        newCSVManager.readCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",conditions,columns);
 
 
         //updateCSV . Mani, please fix the bug of writing to same file
         HashMap<String,String> set = new HashMap<>();
         set.put("D","whaa");
-        NewCSVManager.updateCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",conditions,set);
+        newCSVManager.updateCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",conditions,set);
 
 
         //insertCSV
@@ -36,16 +42,16 @@ public class SQLToCSV {
         columnsAndValues.put("A","Mani");
         columnsAndValues.put("C","Teja");
         columnsAndValues.put("D","Varma");
-        NewCSVManager.insertCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",columnsAndValues);
+        newCSVManager.insertCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",columnsAndValues);
 
 
         //create new file with headers
-        NewCSVManager.createTableWithHeaders("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp3.csv",columns);
+        newCSVManager.createTableWithHeaders("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp3.csv",columns);
 
         //alter table add new column
         ArrayList<String> columnList = new ArrayList<>();
         columnList.add("E");
-        NewCSVManager.alterAddColumn("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",columnList);
+        newCSVManager.alterAddColumn("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",columnList);
 
         //alter table remove new column
         NewCSVManager.alterRemoveColumn("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",columnList);

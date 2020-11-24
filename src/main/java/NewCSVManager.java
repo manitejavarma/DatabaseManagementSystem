@@ -1,20 +1,25 @@
+import com.opencsv.CSVWriter;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVParser;
+import org.apache.commons.csv.CSVPrinter;
+import org.apache.commons.csv.CSVRecord;
 import tech.tablesaw.api.CategoricalColumn;
 import tech.tablesaw.api.Row;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
 import tech.tablesaw.columns.Column;
 
-import java.io.IOException;
+import java.io.*;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.nio.file.StandardOpenOption;
+import java.util.*;
 
 //using tablesaw to do csv operations based on SQL query
 public class NewCSVManager {
 
-    public static void readCSV(String filepath, HashMap<String,String> conditions, ArrayList<String> columns) throws IOException {
+    public void readCSV(String filepath, HashMap<String,String> conditions, ArrayList<String> columns) throws IOException {
         Table table = Table.read().csv(filepath);
         //conditions.forEach((k, v) -> table.where(table.stringColumn(k).isEqualTo(v)));
         for (Map.Entry<String, String> entry : conditions.entrySet()) {
@@ -28,7 +33,33 @@ public class NewCSVManager {
         }
     }
 
-    public static void updateCSV(String filepath, HashMap<String,String> conditions, HashMap<String,String> set) throws IOException{
+    public boolean doesDataExistOnCondition(String filepath, HashMap<String,String> conditions, ArrayList<String> columns) throws IOException {
+        Table table = Table.read().csv(filepath);
+        //conditions.forEach((k, v) -> table.where(table.stringColumn(k).isEqualTo(v)));
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            table = table.where(table.stringColumn(entry.getKey()).isEqualTo(entry.getValue()));
+        }
+        Table reduced = table.select(columns.toArray(new String[columns.size()]));
+        if(reduced.rowCount() > 0){
+            return true;
+        }else return false;
+    }
+
+    public ArrayList<ArrayList<String>> getAllDataFromTable(String filepath) throws IOException {
+        Table table = Table.read().csv(filepath);
+        ArrayList<ArrayList<String>> allData = new ArrayList<>();
+        List<String> headers = getHeaders(filepath);
+        for (Row row : table) {
+            ArrayList<String> rowData = new ArrayList<>();
+            for(String column: headers){
+                rowData.add(row.getString(column));
+            }
+            allData.add(rowData);
+        }
+        return allData;
+    }
+
+    public void updateCSV(String filepath, HashMap<String,String> conditions, HashMap<String,String> set) throws IOException{
             Table table = Table.read().csv(filepath);
             for (Row row : table) {
                 for (Map.Entry<String, String> entry : conditions.entrySet()) {
@@ -42,22 +73,39 @@ public class NewCSVManager {
         table.write().csv(filepath);
     }
 
-    public static void insertCSV(String filepath, HashMap<String,String> columnsAndValues) throws IOException{
-        Table table = Table.read().csv(filepath);
-        ArrayList<String> headers = (ArrayList<String>) table.columnNames();
-        Table temp = Table.create("temp table");
+    public void insertCSV(String filepath, HashMap<String,String> columnsAndValues) throws IOException{
+        ArrayList<String> headers = (ArrayList<String>) getHeaders(filepath);
+        ArrayList<String> allValues = new ArrayList<>(headers.size());
 
-        for(String header: headers){
-            if(columnsAndValues.containsKey(header)){
-                temp.addColumns(StringColumn.create(header, new String[] {columnsAndValues.get(header)}));
+        for (int i = 0; i < headers.size(); i++) {
+            if(columnsAndValues.containsKey(headers.get(i))) {
+                allValues.add(columnsAndValues.get(headers.get(i)));
             }else{
-                temp.addColumns(StringColumn.create(header, new String[] {""}));
+                allValues.add("");
             }
         }
 
-        table.addRow(0,temp);
-        table.write().csv(filepath);
+        BufferedWriter writer = Files.newBufferedWriter(
+                Paths.get(filepath),
+                StandardOpenOption.APPEND,
+                StandardOpenOption.CREATE);
+        CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
+        csvPrinter.printRecord(allValues);
+        csvPrinter.close();
+    }
 
+    public List getHeaders(String filename) throws IOException {
+        CSVFormat csvFileFormat = CSVFormat.DEFAULT;
+        FileReader fileReader = new FileReader(filename);
+        CSVParser csvFileParser = new CSVParser(fileReader, csvFileFormat);
+        CSVRecord csvRecord = csvFileParser.getRecords().get(0);
+        ArrayList<String> headers = new ArrayList<>();
+        for(String field : csvRecord){
+            headers.add(field);
+        }
+        fileReader.close();
+        csvFileParser.close();
+        return headers;
     }
 
     public static void alterAddColumn(String filepath, ArrayList<String> columnNames) throws IOException{
