@@ -1,0 +1,8 @@
+{
+  "tableName": "course",
+  "columns": {
+    "courseID": "int",
+    "courseName": "string",
+    "taughtBy": "string"
+  }
+}

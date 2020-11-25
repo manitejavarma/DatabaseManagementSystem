@@ -1,0 +1,9 @@
+{
+  "tableName": "student",
+  "columns": {
+    "Id": "int",
+    "Firstname": "string",
+    "age": "double",
+    "Address": "string"
+  }
+}
