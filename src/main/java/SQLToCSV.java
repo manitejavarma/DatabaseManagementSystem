@@ -31,7 +31,7 @@ public class SQLToCSV {
         newCSVManager.readCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",conditions,columns);
 
 
-        //updateCSV . Mani, please fix the bug of writing to same file
+        //updateCSV .
         HashMap<String,String> set = new HashMap<>();
         set.put("D","whaa");
         newCSVManager.updateCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv",conditions,set);

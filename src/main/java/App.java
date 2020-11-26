@@ -10,7 +10,7 @@ import java.util.stream.Collectors;
 public class App {
     public static void main(String[] args) throws IOException {
 
-        //
+
         NewCSVManager newCSVManager = new NewCSVManager();
 
         String username = "mani";//ReadInput.readInput("Please enter username");
@@ -21,6 +21,7 @@ public class App {
 
         SQLToCSV sqlToCSV = new SQLToCSV();
 
+
         //Get all data from table
         String insertquerystatements = "";
         String tablenametoinsert = "temp";
@@ -29,6 +30,8 @@ public class App {
             insertquerystatements = insertquerystatements + "insert into table " + tablenametoinsert + " values (";
             insertquerystatements = insertquerystatements + join(row) + ");";
         }
+
+
 
         String tableName = "temp";
         if(checkIfAnyTransactionUsingSametable(tableName)){
@@ -53,7 +56,7 @@ public class App {
         columnsAndValues.put("timestamp", String.valueOf(LocalDate.now()));
         newCSVManager.insertCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\transactions.csv",columnsAndValues);
 
-        String stmt = "nothing";//ReadInput.readInput("Commit or rollback");
+        String stmt = "commit";//ReadInput.readInput("Commit or rollback");
         if(stmt.equals("commit")){
             try{
                 File mainFile = new File("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+tableName+".csv");
