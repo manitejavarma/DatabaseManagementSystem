@@ -1,10 +1,13 @@
-package metadata;
+package DBMS.metadata;
 
-import attributetype.AttributeType;
-import attributetype.AttributeTypeDeserializer;
+import DBMS.UserControl;
+import DBMS.attributetype.AttributeTypeDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+import com.sun.xml.internal.bind.v2.schemagen.xmlschema.AttributeType;
 
+
+import java.io.FileWriter;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
@@ -102,4 +105,44 @@ public class MetadataManager {
 
         return metadata;
     }
+
+    public void createDatabase(String databaseName,String userName) throws IOException {
+        try {
+            Files.createDirectories(Paths.get("database/"+ databaseName));
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        UserControl.grantAccessToDatabase(userName,databaseName);
+    }
+
+    //Hey, please remove dummy metadata later :)
+    public void createTableMetadata(String databaseName, String tableName){
+        Metadata metadata = new Metadata();
+        metadata.setTableName("Student");
+        metadata.setForeignKeys(new ArrayList<>());
+        metadata.setColumns(new HashMap<>());
+        metadata.setPrimaryKeys(new ArrayList<>());
+
+        Gson gson2 = new GsonBuilder()
+                .setPrettyPrinting().create();
+
+        FileWriter fileWriter = null;
+        try {
+            fileWriter = new FileWriter("database/"+databaseName+"/"+tableName+"_metadata.json");
+            gson2.toJson(metadata, fileWriter);
+
+        } catch (Exception e) {
+            System.out.println("Something went wrong while updating JSON ");
+        } finally {
+            try {
+                fileWriter.flush();
+                fileWriter.close();
+            } catch (IOException e) {
+                System.out.println("Something went wrong while updating JSON ");
+            }
+
+        }
+
+    }
+
 }

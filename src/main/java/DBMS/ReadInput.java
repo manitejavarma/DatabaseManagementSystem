@@ -1,3 +1,5 @@
+package DBMS;
+
 import java.util.Scanner;
 
 public class ReadInput {
