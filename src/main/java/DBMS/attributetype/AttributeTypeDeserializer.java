@@ -1,4 +1,4 @@
-package attributetype;
+package DBMS.attributetype;
 
 import com.google.gson.JsonDeserializationContext;
 import com.google.gson.JsonDeserializer;

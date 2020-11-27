@@ -1,6 +1,6 @@
-package metadata;
+package DBMS.metadata;
 
-import attributetype.AttributeType;
+import DBMS.attributetype.AttributeType;
 
 import java.util.HashMap;
 import java.util.List;

@@ -1,0 +1,9 @@
+{
+  "tableName": "test",
+  "columns": {
+    "id": "string",
+    "name": "string",
+    "university": "string"
+  },
+  "primaryKeys": ["id"]
+}

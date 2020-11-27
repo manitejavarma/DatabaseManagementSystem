@@ -1,3 +1,5 @@
+package DBMS;
+
 import tech.tablesaw.api.Table;
 import java.io.File;
 import java.io.IOException;
@@ -13,8 +15,8 @@ public class Test {
 
         NewCSVManager newCSVManager = new NewCSVManager();
 
-        String username = "mani";//ReadInput.readInput("Please enter username");
-        String password = "pass";//ReadInput.readInput("Please enter password");
+        String username = "mani";//DBMS.ReadInput.readInput("Please enter username");
+        String password = "pass";//DBMS.ReadInput.readInput("Please enter password");
 
         Transaction transaction = new Transaction();
         transaction.generateTransactionId(username);
@@ -56,7 +58,7 @@ public class Test {
         columnsAndValues.put("timestamp", String.valueOf(LocalDate.now()));
         newCSVManager.insertCSV("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\transactions.csv",columnsAndValues);
 
-        String stmt = "commit";//ReadInput.readInput("Commit or rollback");
+        String stmt = "commit";//DBMS.ReadInput.readInput("Commit or rollback");
         if(stmt.equals("commit")){
             try{
                 File mainFile = new File("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+tableName+".csv");

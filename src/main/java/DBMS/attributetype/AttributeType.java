@@ -1,4 +1,4 @@
-package attributetype;
+package DBMS.attributetype;
 
 public enum AttributeType {
     INT,
