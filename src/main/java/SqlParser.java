@@ -5,6 +5,8 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
+
 import utils.Constants;
 
 public class SqlParser implements ISqlParser {
@@ -12,9 +14,10 @@ public class SqlParser implements ISqlParser {
     
 	public void validateQuery(String query) {
 		logger.info("Invoked validateQuery method");
-		if(query.toLowerCase().contains("select"))
-		{
+		if(query.toLowerCase().contains("select")){
 			selectQuery(query);
+		}else if(query.toLowerCase().contains("create database")){
+			createDBQuery(query);
 		}
 
 		
@@ -36,6 +39,19 @@ public class SqlParser implements ISqlParser {
 		//call to semantic parser
 		//if valid, func call to execute the query, pass the map as input 
 		
+	}
+	
+	void createDBQuery(String query) {
+		Map<String,String> createDBFields = new HashMap<String, String>();
+		Pattern pattern = Pattern.compile(Constants.CREATE_DB_REGEX, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(query);
+		boolean matchFound = matcher.find();
+		if (matchFound) {
+			createDBFields.put("database", matcher.group(1));
+		}
+		
+		//call to semantic parser
+		//if valid, func call to execute the query, pass the map as input 
 	}
 
 }

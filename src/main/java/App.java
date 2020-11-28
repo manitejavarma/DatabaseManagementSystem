@@ -7,6 +7,6 @@ public class App {
     public static void main(String[] args){
     	logger.info("Application started");
         ISqlParser parser = new SqlParser();
-        logger.info("Response "+parser.validateQuery(Constants.QUERY));
+        parser.validateQuery(Constants.QUERY);
     }
 }
