@@ -11,8 +11,21 @@ import java.util.Map;
 public class App {
     public static void main(String[] args) throws IOException {
 
-//        String username = ReadInput.readInput("Please enter username");
-//        String password = ReadInput.readInput("Please enter password");
+        String username = ReadInput.readInput("Please enter username");
+        String password = ReadInput.readInput("Please enter password");
+
+        DBMS dbms = DBMS.getInstance();
+        //if valid user
+        dbms.setUsername(username);
+        String query = ReadInput.readInput("Enter Query");
+        do{
+            switch (query){
+
+            }
+            query = ReadInput.readInput(">");
+        }while(query!="quit");
+
+
 //
 //        User user = new User(username,password);
 //        if(!UserControl.userExists(user.getUsername())){
