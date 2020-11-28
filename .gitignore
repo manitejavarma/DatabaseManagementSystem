@@ -1,6 +1,6 @@
 # Default ignored files
 /shelf/
-.idea/
+/.idea/
 target/
-
-
+/build/*
+/5408_Group11.iml
