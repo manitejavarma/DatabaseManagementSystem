@@ -7,5 +7,7 @@ public class Constants {
 	public static String QUERY="create database db;";
 	public static String SELECT_REGEX = "^SELECT\\s([\\w\\*\\)\\(\\,\\s]+)\\sFROM\\s([\\w]+)\\sWHERE\\s(\\w+)\\s*\\=\\s*([\"\\w]+);$";
 	public static String CREATE_DB_REGEX = "^create\\s+database\\s+(\\w+);$";
+	public static String UPDATE_REGEX = "^UPDATE\\s([\\w]+)\\sSET\\s(\\w+)\\s*\\=\\s*([\"\\w]+);$";
+	public static String DELETE_REGEX = "^DELETE\\sFROM\\s(\\w+)\\sWHERE\\s(\\w+)\\s*\\=\\s*([\"\\w]+);$";
 	
 }
