@@ -101,8 +101,11 @@ public class SqlParser implements ISqlParser {
 			insertFields.put("table", table);
 			insertFields.put("columns", matcher.group(2).split(","));
 			String values[]=matcher.group(3).split(",");
+			for(int i=0;i<values.length;i++)
+			{
+				values[i]=values[i].replace("\"", "");
+			}
 			insertFields.put("values", values);
-			
 		}
 		//call to semantic parser
 		//if valid, func call to execute the query, pass the map as input 
@@ -115,15 +118,16 @@ public class SqlParser implements ISqlParser {
 		Pattern pattern = Pattern.compile(Constants.CREATE_TABLE_REGEX, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(query);
 		boolean matchFound = matcher.find();
-		System.out.println("match "+matchFound);
+		
 		if(matchFound) {
 			String fields = matcher.group(2);
 			fields=fields.substring(0, fields.length()-1);
 			System.out.println("fields "+fields);
+			
 			Pattern subPattern = Pattern.compile(Constants.CREATE_TABLE_SUB_REGEX, Pattern.CASE_INSENSITIVE);
 			Matcher subMatcher = subPattern.matcher(fields);
 			boolean subMatchFound = subMatcher.find();
-			System.out.println("match "+subMatchFound);
+			
 			if(subMatchFound) {
 				System.out.println("column 2 "+subMatcher.group(2).indexOf(0, 4));
 				System.out.println("column 3"+subMatcher.group(3));
