@@ -1,5 +1,6 @@
 import java.util.logging.Logger;
 
+import DBMS.ReadInput;
 import utils.Constants;
 
 public class App {
@@ -7,6 +8,7 @@ public class App {
     public static void main(String[] args){
     	logger.info("Application started");
         ISqlParser parser = new SqlParser();
-        parser.validateQuery(Constants.QUERY);
+        String query = ReadInput.readInput("Insert Query >");
+        parser.validateQuery(query);
     }
 }
