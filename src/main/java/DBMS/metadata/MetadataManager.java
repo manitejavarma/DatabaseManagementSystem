@@ -102,7 +102,6 @@ public class MetadataManager {
                 }
             }
         }
-
         return metadata;
     }
 
@@ -118,7 +117,7 @@ public class MetadataManager {
     //Hey, please remove dummy metadata later :)
     public void createTableMetadata(String databaseName, String tableName){
         Metadata metadata = new Metadata();
-        metadata.setTableName("Student");
+        metadata.setTableName(tableName);
         metadata.setForeignKeys(new ArrayList<>());
         metadata.setColumns(new HashMap<>());
         metadata.setPrimaryKeys(new ArrayList<>());
@@ -140,9 +139,6 @@ public class MetadataManager {
             } catch (IOException e) {
                 System.out.println("Something went wrong while updating JSON ");
             }
-
         }
-
     }
-
 }

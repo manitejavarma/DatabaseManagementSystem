@@ -1,14 +1,31 @@
 package DBMS;
 
+import DBMS.attributetype.AttributeType;
+import DBMS.metadata.Metadata;
 import DBMS.metadata.MetadataManager;
 
 import java.io.IOException;
+import java.util.Arrays;
+import java.util.Map;
 
 public class App {
     public static void main(String[] args) throws IOException {
 
-//        String username = ReadInput.readInput("Please enter username");
-//        String password = ReadInput.readInput("Please enter password");
+        String username = ReadInput.readInput("Please enter username");
+        String password = ReadInput.readInput("Please enter password");
+
+        DBMS dbms = DBMS.getInstance();
+        //if valid user
+        dbms.setUsername(username);
+        String query = ReadInput.readInput("Enter Query");
+        do{
+            switch (query){
+
+            }
+            query = ReadInput.readInput(">");
+        }while(query!="quit");
+
+
 //
 //        User user = new User(username,password);
 //        if(!UserControl.userExists(user.getUsername())){
@@ -28,8 +45,27 @@ public class App {
 
 //        MetadataManager metadataManager = new MetadataManager();
 //        metadataManager.createDatabase("tes4","mani");
+//
+//        MetadataManager metadataManager = new MetadataManager();
+//        metadataManager.createTableMetadata("tes4","mani");
 
+//        MetadataManager metadataManager = new MetadataManager();
+//        metadataManager.getMetadataByDatabaseAndTable("CollegeDatabase","course");
+
+        //createStatement();
+    }
+
+    private static void createStatement() {
         MetadataManager metadataManager = new MetadataManager();
-        metadataManager.createTableMetadata("tes4","mani");
+        Metadata metadata = metadataManager.getMetadataByDatabaseAndTable("CollegeDatabase","course");
+        String createStatement = "";
+        createStatement = createStatement + "create table " + metadata.getTableName() + "(";
+        for (Map.Entry<String, AttributeType> entry2 : metadata.getColumns().entrySet()) {
+            createStatement = createStatement + entry2.getKey() + " " + entry2.getValue().toString() + ",";
+        }
+        if(metadata.getPrimaryKeys().size()>0){
+            createStatement = createStatement + String.join(",",metadata.getPrimaryKeys());
+        }
+        System.out.println(createStatement);
     }
 }

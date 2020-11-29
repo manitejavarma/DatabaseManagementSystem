@@ -13,6 +13,7 @@ public class Test {
     public static void main(String[] args) throws IOException {
 
 
+
         NewCSVManager newCSVManager = new NewCSVManager();
 
         String username = "mani";//DBMS.ReadInput.readInput("Please enter username");
@@ -25,14 +26,7 @@ public class Test {
 
 
         //Get all data from table
-        String insertquerystatements = "";
-        String tablenametoinsert = "temp";
-        ArrayList<ArrayList<String>> data = newCSVManager.getAllDataFromTable("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv");
-        for(ArrayList<String> row : data){
-            insertquerystatements = insertquerystatements + "insert into table " + tablenametoinsert + " values (";
-            insertquerystatements = insertquerystatements + join(row) + ");";
-        }
-
+        CreateTableDump(newCSVManager);
 
 
         String tableName = "temp";
@@ -75,6 +69,16 @@ public class Test {
             updateLog("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\transactions.csv",newCSVManager,transaction,TRANSACTION_STATE.ROLLBACK.name());
         }
         transaction.generateTransactionId(username);
+    }
+
+    private static void CreateTableDump(NewCSVManager newCSVManager) throws IOException {
+        String insertquerystatements = "";
+        String tablenametoinsert = "temp";
+        ArrayList<ArrayList<String>> data = newCSVManager.getAllDataFromTable("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\temp.csv");
+        for(ArrayList<String> row : data){
+            insertquerystatements = insertquerystatements + "insert into table " + tablenametoinsert + " values (";
+            insertquerystatements = insertquerystatements + join(row) + ");";
+        }
     }
 
     private static boolean checkIfAnyTransactionUsingSametable(String tableName) throws IOException {
