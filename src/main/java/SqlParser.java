@@ -1,5 +1,6 @@
 //https://regexlib.com/REDetails.aspx?regexp_id=945&AspxAutoDetectCookieSupport=1
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.logging.Logger;
 import java.util.regex.Matcher;
@@ -23,9 +24,9 @@ public class SqlParser implements ISqlParser {
 		}else if(query.toLowerCase().contains("delete")){
 			deleteQuery(query);
 		}else if(query.toLowerCase().contains("create table")){
-			
+			createQuery(query);
 		}else if(query.toLowerCase().contains("insert")){
-			
+			insertQuery(query);
 		}
 	}
 	
@@ -89,5 +90,46 @@ public class SqlParser implements ISqlParser {
 		//if valid, func call to execute the query, pass the map as input 
 		
 	}
+	
+	void insertQuery(String query) {
+		Map<String,String[]> insertFields = new HashMap<String, String[]>();
+		Pattern pattern = Pattern.compile(Constants.INSERT_REGEX, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(query);
+		boolean matchFound = matcher.find();
+		if(matchFound) {
+			String[] table = {matcher.group(1)};
+			insertFields.put("table", table);
+			insertFields.put("columns", matcher.group(2).split(","));
+			String values[]=matcher.group(3).split(",");
+			insertFields.put("values", values);
+			
+		}
+		//call to semantic parser
+		//if valid, func call to execute the query, pass the map as input 
+				
+	}
 
+	void createQuery(String query) {
+		
+		Map<String,String[]> createTableFields = new HashMap<String, String[]>();
+		Pattern pattern = Pattern.compile(Constants.CREATE_TABLE_REGEX, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(query);
+		boolean matchFound = matcher.find();
+		System.out.println("match "+matchFound);
+		if(matchFound) {
+			String fields = matcher.group(2);
+			fields=fields.substring(0, fields.length()-1);
+			System.out.println("fields "+fields);
+			Pattern subPattern = Pattern.compile(Constants.CREATE_TABLE_SUB_REGEX, Pattern.CASE_INSENSITIVE);
+			Matcher subMatcher = subPattern.matcher(fields);
+			boolean subMatchFound = subMatcher.find();
+			System.out.println("match "+subMatchFound);
+			if(subMatchFound) {
+				System.out.println("column 2 "+subMatcher.group(2).indexOf(0, 4));
+				System.out.println("column 3"+subMatcher.group(3));
+				System.out.println("colums 4"+subMatcher.group(2).codePointCount(9, 12));
+				System.out.println("colums 5"+subMatcher.group(3));
+			}
+		}
+	}
 }
