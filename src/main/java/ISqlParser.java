@@ -1,4 +1,5 @@
+import java.util.Map;
 
 public interface ISqlParser {
-	int validateQuery(String query);
+	void validateQuery(String query);
 }
