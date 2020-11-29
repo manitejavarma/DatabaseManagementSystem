@@ -1,10 +1,10 @@
 package DBMS.metadata;
 
 import DBMS.UserControl;
+import DBMS.attributetype.AttributeType;
 import DBMS.attributetype.AttributeTypeDeserializer;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import com.sun.xml.internal.bind.v2.schemagen.xmlschema.AttributeType;
 
 
 import java.io.FileWriter;
@@ -13,6 +13,7 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.sql.DataTruncation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -115,12 +116,7 @@ public class MetadataManager {
     }
 
     //Hey, please remove dummy metadata later :)
-    public void createTableMetadata(String databaseName, String tableName){
-        Metadata metadata = new Metadata();
-        metadata.setTableName(tableName);
-        metadata.setForeignKeys(new ArrayList<>());
-        metadata.setColumns(new HashMap<>());
-        metadata.setPrimaryKeys(new ArrayList<>());
+    public void createTableMetadata(String databaseName, String tableName,Metadata metadata){
 
         Gson gson2 = new GsonBuilder()
                 .setPrettyPrinting().create();

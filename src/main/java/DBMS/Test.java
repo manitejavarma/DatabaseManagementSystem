@@ -40,7 +40,7 @@ public class Test {
         String copyTableName = transaction.getId()+"_"+tableName;
         Table table = Table.read().csv("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+tableName+".csv");
         table.write().csv("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+copyTableName+".csv");
-        sqlToCSV.insertQuery(copyTableName);
+        //sqlToCSV.insertQuery(copyTableName);
 
 
         //update log

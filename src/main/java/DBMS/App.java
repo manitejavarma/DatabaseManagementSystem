@@ -11,19 +11,19 @@ import java.util.Map;
 public class App {
     public static void main(String[] args) throws IOException {
 
-        String username = ReadInput.readInput("Please enter username");
-        String password = ReadInput.readInput("Please enter password");
-
-        DBMS dbms = DBMS.getInstance();
-        //if valid user
-        dbms.setUsername(username);
-        String query = ReadInput.readInput("Enter Query");
-        do{
-            switch (query){
-
-            }
-            query = ReadInput.readInput(">");
-        }while(query!="quit");
+//        String username = ReadInput.readInput("Please enter username");
+//        String password = ReadInput.readInput("Please enter password");
+//
+//        DBMS dbms = DBMS.getInstance();
+//        //if valid user
+//        dbms.setUsername(username);
+//        String query = ReadInput.readInput("Enter Query");
+//        do{
+//            switch (query){
+//
+//            }
+//            query = ReadInput.readInput(">");
+//        }while(query!="quit");
 
 
 //
@@ -52,7 +52,7 @@ public class App {
 //        MetadataManager metadataManager = new MetadataManager();
 //        metadataManager.getMetadataByDatabaseAndTable("CollegeDatabase","course");
 
-        //createStatement();
+        createStatement();
     }
 
     private static void createStatement() {
