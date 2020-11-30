@@ -88,11 +88,11 @@ public class NewCSVManager {
 
         BufferedWriter writer = Files.newBufferedWriter(
                 Paths.get(filepath),
-                StandardOpenOption.APPEND,
-                StandardOpenOption.CREATE);
+                StandardOpenOption.APPEND);
         CSVPrinter csvPrinter = new CSVPrinter(writer, CSVFormat.DEFAULT);
         csvPrinter.printRecord(allValues);
         csvPrinter.close();
+        writer.close();
     }
 
     public List getHeaders(String filename) throws IOException {
@@ -135,5 +135,14 @@ public class NewCSVManager {
         }
         temp = temp.dropRange(0,1);
         temp.write().csv(filepath);
+    }
+
+    public void deleteCSV(String filepath, HashMap<String,String> conditions) throws IOException {
+        Table table = Table.read().csv(filepath);
+        //conditions.forEach((k, v) -> table.where(table.stringColumn(k).isEqualTo(v)));
+        for (Map.Entry<String, String> entry : conditions.entrySet()) {
+            table = table.dropWhere(table.stringColumn(entry.getKey()).isEqualTo(entry.getValue()));
+        }
+        table.write().csv(filepath);
     }
 }

@@ -25,14 +25,14 @@ public class Test {
         SQLToCSV sqlToCSV = new SQLToCSV();
 
 
-        //Get all data from table
-        CreateTableDump(newCSVManager);
+//        //Get all data from table
+//        CreateTableDump(newCSVManager);
 
 
         String tableName = "temp";
-        if(checkIfAnyTransactionUsingSametable(tableName)){
-            System.out.println("there is another transaction using the same table. please try again later. rn doing it :P ");
-        }
+//        if(checkIfAnyTransactionUsingSametable(tableName)){
+//            System.out.println("there is another transaction using the same table. please try again later. rn doing it :P ");
+//        }
 
 
         //create copy of file
@@ -40,7 +40,7 @@ public class Test {
         String copyTableName = transaction.getId()+"_"+tableName;
         Table table = Table.read().csv("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+tableName+".csv");
         table.write().csv("E:\\Dalhousie\\CSCI 5408 - Data\\project\\sourcecode\\files\\"+copyTableName+".csv");
-        sqlToCSV.insertQuery(copyTableName);
+        //sqlToCSV.insertQuery(copyTableName);
 
 
         //update log

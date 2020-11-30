@@ -11,19 +11,25 @@ import java.util.Map;
 public class App {
     public static void main(String[] args) throws IOException {
 
-        String username = ReadInput.readInput("Please enter username");
-        String password = ReadInput.readInput("Please enter password");
 
-        DBMS dbms = DBMS.getInstance();
-        //if valid user
-        dbms.setUsername(username);
-        String query = ReadInput.readInput("Enter Query");
-        do{
-            switch (query){
+        MetadataManager metadataManager = new MetadataManager();
+        System.out.println(metadataManager.tableExists("TestDB","test"));
 
-            }
-            query = ReadInput.readInput(">");
-        }while(query!="quit");
+//        SqlParser sqlParser = new SqlParser();
+//        Transaction transaction = new Transaction();
+//        String username = "root";//ReadInput.readInput("Please enter username");
+//        String password = "root";//ReadInput.readInput("Please enter password");
+//
+//        DBMS dbms = DBMS.getInstance();
+//        //if valid user
+//        dbms.setUsername(username);
+//        transaction.generateTransactionId(username);
+//        dbms.setTransactionId(transaction.getId());
+//        String query = "use TestDB;";//ReadInput.readInput("Enter Query");
+//        do{
+//            sqlParser.validateQuery(query);
+//            query = ReadInput.readInput("Enter Query");
+//        }while(query!="quit");
 
 
 //
