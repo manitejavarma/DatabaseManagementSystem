@@ -1,4 +1,5 @@
-//https://regexlib.com/REDetails.aspx?regexp_id=945&AspxAutoDetectCookieSupport=1
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -8,6 +9,8 @@ import java.util.regex.Pattern;
 
 import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
 
+import DBMS.attributetype.AttributeType;
+import DBMS.metadata.Metadata;
 import utils.Constants;
 
 public class SqlParser implements ISqlParser {
@@ -27,6 +30,10 @@ public class SqlParser implements ISqlParser {
 			createQuery(query);
 		}else if(query.toLowerCase().contains("insert")){
 			insertQuery(query);
+		}else if(query.toLowerCase().contains("use")){
+			useDatabaseQuery(query);
+		}else if(query.toLowerCase().contains("grant")){
+			grantQuery(query);
 		}
 	}
 	
@@ -113,8 +120,9 @@ public class SqlParser implements ISqlParser {
 	}
 
 	void createQuery(String query) {
-		
+		Metadata metadata = new Metadata();
 		Map<String,String[]> createTableFields = new HashMap<String, String[]>();
+		Map<String,AttributeType> columns = new HashMap<String, AttributeType>();
 		Pattern pattern = Pattern.compile(Constants.CREATE_TABLE_REGEX, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(query);
 		boolean matchFound = matcher.find();
@@ -123,17 +131,43 @@ public class SqlParser implements ISqlParser {
 			String fields = matcher.group(2);
 			fields=fields.substring(0, fields.length()-1);
 			System.out.println("fields "+fields);
-			
-			Pattern subPattern = Pattern.compile(Constants.CREATE_TABLE_SUB_REGEX, Pattern.CASE_INSENSITIVE);
-			Matcher subMatcher = subPattern.matcher(fields);
-			boolean subMatchFound = subMatcher.find();
-			
-			if(subMatchFound) {
-				System.out.println("column 2 "+subMatcher.group(2).indexOf(0, 4));
-				System.out.println("column 3"+subMatcher.group(3));
-				System.out.println("colums 4"+subMatcher.group(2).codePointCount(9, 12));
-				System.out.println("colums 5"+subMatcher.group(3));
+		
+			String[] column = fields.split(",");
+			String[] seperateFields;
+			AttributeType attribute;
+			for(String i : column) {
+				seperateFields =i.split(" ");
+				attribute = AttributeType.valueOf(seperateFields[1]);
+				columns.put(seperateFields[0], attribute);
 			}
+			
+			String[] primaryKeys = matcher.group(4).split(",");
+			List<String> primary = Arrays.asList(primaryKeys);
+			metadata.setTableName(matcher.group(1));
+			metadata.setColumns(columns);
+			metadata.setPrimaryKeys(primary);
 		}
 	}
+	
+	void useDatabaseQuery(String query) {
+		Pattern pattern = Pattern.compile(Constants.USE_DATABASE, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(query);
+		boolean matchFound = matcher.find();
+		if(matchFound) {
+			String database = matcher.group(1);
+		}
+	}
+	
+	void grantQuery(String query) {
+		Map<String,String> grantFields = new HashMap<String, String>();
+		Pattern pattern = Pattern.compile(Constants.GRANT_REGEX, Pattern.CASE_INSENSITIVE);
+		Matcher matcher = pattern.matcher(query);
+		boolean matchFound = matcher.find();
+		if(matchFound) {
+			grantFields.put("role", matcher.group(1));
+			grantFields.put("database", matcher.group(2));
+			grantFields.put("user", matcher.group(3));
+		}
+	}
+	
 }
