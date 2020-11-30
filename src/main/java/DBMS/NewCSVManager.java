@@ -29,8 +29,9 @@ public class NewCSVManager {
         Table reduced = table.select(columns.toArray(new String[columns.size()]));
         for (Row row : reduced) {
             for(String column: columns){
-                System.out.println(row.getString(column));
+                System.out.print(row.getString(column));
             }
+            System.out.println("");
         }
     }
 
@@ -62,14 +63,21 @@ public class NewCSVManager {
 
     public void updateCSV(String filepath, HashMap<String,String> conditions, HashMap<String,String> set) throws IOException{
             Table table = Table.read().csv(filepath);
+            boolean flag = true;
             for (Row row : table) {
                 for (Map.Entry<String, String> entry : conditions.entrySet()) {
                     if(row.getString(entry.getKey()).equals(entry.getValue())){
                         for (Map.Entry<String, String> entry2 : set.entrySet()) {
                             row.setString(entry2.getKey(), entry2.getValue());
                         }
+                        flag = false;
                     }
                 }
+            }
+            if(flag){
+                System.out.println("0 records matched.");
+                SemanticController semanticController = new SemanticController();
+                semanticController.rollback();
             }
         table.write().csv(filepath);
     }

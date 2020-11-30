@@ -93,8 +93,6 @@ public class SqlParser implements ISqlParser {
 			semanticController.createDatabase(createDBFields.get("database"));
 		}
 
-
-
 		//call to semantic parser
 		//if valid, func call to execute the query, pass the map as input 
 	}
@@ -170,7 +168,6 @@ public class SqlParser implements ISqlParser {
 		if(matchFound) {
 			String fields = matcher.group(2);
 			fields=fields.substring(0, fields.length()-1);
-			System.out.println("fields "+fields);
 		
 			String[] column = fields.split(",");
 			String[] seperateFields;
