@@ -2,6 +2,7 @@ package DBMS;
 
 import DBMS.attributetype.AttributeType;
 import DBMS.metadata.Metadata;
+import DBMS.metadata.MetadataManager;
 import DBMS.utils.Constants;
 
 import java.io.IOException;
@@ -15,6 +16,11 @@ import java.util.regex.Pattern;
 
 public class SqlParser implements ISqlParser {
 	private final static Logger logger = Logger.getLogger(SqlParser.class.getName());
+	MetadataManager metadataManager;
+
+	SqlParser(){
+		metadataManager = new MetadataManager();
+	}
 
     
 	public void validateQuery(String query) throws IOException {
@@ -189,6 +195,11 @@ public class SqlParser implements ISqlParser {
 		if(matchFound) {
 			String database = matcher.group(1);
 			DBMS.getInstance().setActiveDatabase(database);
+
+			if(!metadataManager.databaseExists(DBMS.getInstance().getActiveDatabase())){
+				System.out.println("database " + database +"is not present. Please retry");
+				return;
+			}
 		}
 	}
 	

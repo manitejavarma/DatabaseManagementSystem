@@ -68,12 +68,10 @@ public class MetadataManager {
             for (Path path: pathList) {
                 if (Files.isDirectory(path)) {
                     dbName = path.getFileName().toString();
-                    System.out.println(dbName);
                     dataDictionary.put(dbName, new ArrayList<>());
                 }
 
                 else if (Files.isRegularFile(path) && path.getFileName().toString().endsWith("_metadata.json")) {
-                    System.out.println(path);
                     Metadata metadata = loadMetadata(path.toString());
                     dataDictionary.get(dbName).add(metadata);
                 }

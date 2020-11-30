@@ -29,12 +29,20 @@ public class SemanticController {
             System.out.println("table " + tableName +"is not present in the table. Please retry");
             return;
         }
-        for(String column: columns){
-            if(!metadataManager.columnExists(DBMS.getInstance().getActiveDatabase(),tableName,column)){
-                System.out.println("column " + column +"is not present in the table. Please retry");
-                return;
+        if(!columns[0].isEmpty()){
+            for(String column: columns){
+                if(!metadataManager.columnExists(DBMS.getInstance().getActiveDatabase(),tableName,column)){
+                    System.out.println("column " + column +"is not present in the table. Please retry");
+                    return;
+                }
             }
         }
+
+        if(transaction.checkIfAnyTransactionUsingSametable(tableName)){
+            System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
+            return;
+        }
+
 
         transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
 
@@ -48,6 +56,9 @@ public class SemanticController {
                 columnsAndValues.put(allTableColumns.get(i),values[i]);
             }
         }else{
+
+
+
             //Setting columns and values to insert into CSV
             for(int i =0;i<columns.length;i++){
                 columnsAndValues.put(columns[i],values[i]);
@@ -98,6 +109,11 @@ public class SemanticController {
             }
         }
 
+        if(transaction.checkIfAnyTransactionUsingSametable(tableName)){
+            System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
+            return;
+        }
+
         transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
 
         //updating to Table
@@ -141,7 +157,22 @@ public class SemanticController {
             return;
         }
 
-        sqlToCSV.deleteRows(DBMS.getInstance().getActiveDatabase(),tableName,conditions);
+        if(transaction.checkIfAnyTransactionUsingSametable(tableName)){
+            System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
+            return;
+        }
+
+        transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
+
+        sqlToCSV.deleteRows(DBMS.getInstance().getActiveDatabase(),transaction.getCopyTableName(DBMS.getInstance().getActiveDatabase(),tableName),conditions);
+
+
+
+
+        //Transaction Log
+        transaction.insertTransactionLog(tableName);
+
+        DBMS.getInstance().getTables().add(tableName);
     }
 
     public void selectTable(Map<String, String> selectFields) throws IOException {
