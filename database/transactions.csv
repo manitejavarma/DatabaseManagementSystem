@@ -1,0 +1,17 @@
+username,transactionid,table,transaction_state,timestamp
+mani,root_123132_temp,temp2,COMMIT,2020-30-11
+root,root_67814504,test2,ROLLBACK,2020-11-30
+root,root_41792171,test2,COMMIT,2020-11-30
+root,root_48240301,test2,ROLLBACK,2020-11-30
+root,root_86465067,test2,COMMIT,2020-11-30
+root,root_73378632,test2,COMMIT,2020-11-30
+root,root_90257593,test2,COMMIT,2020-11-30
+root,root_81979584,test2,COMMIT,2020-11-30
+root,root_90521551,test2,COMMIT,2020-11-30
+root,root_22061509,test2,COMMIT,2020-11-30
+root,root_20602662,test2,COMMIT,2020-11-30
+root,root_1666280,test2,COMMIT,2020-11-30
+root,root_34246818,test2,COMMIT,2020-11-30
+root,root_10356323,test2,COMMIT,2020-11-30
+root,root_94445538,test2,COMMIT,2020-11-30
+root,root_58540097,test2,ROLLBACK,2020-11-30

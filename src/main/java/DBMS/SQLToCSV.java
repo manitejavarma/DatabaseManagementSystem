@@ -38,6 +38,14 @@ public class SQLToCSV {
 //        conditions.put("C","this");
         newCSVManager.updateCSV("database/"+databaseName+"/"+tableName+".csv",conditions,set);
     }
+
+    public void deleteRows(String databaseName, String tableName,HashMap<String,String> conditions) throws IOException {
+//        HashMap<String,String> set = new HashMap<>();
+//        set.put("D","whaa");
+//        HashMap<String,String> conditions = new HashMap<>();
+//        conditions.put("C","this");
+        newCSVManager.deleteCSV("database/"+databaseName+"/"+tableName+".csv",conditions);
+    }
     public void selectTable(String database, String table, ArrayList<String> columns, HashMap<String,String> conditions) throws IOException {
 //        HashMap<String,String> conditions = new HashMap<>();
 //        conditions.put("C","this");

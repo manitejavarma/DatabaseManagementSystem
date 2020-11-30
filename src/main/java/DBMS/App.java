@@ -12,18 +12,24 @@ public class App {
     public static void main(String[] args) throws IOException {
 
 
-        SqlParser sqlParser = new SqlParser();
-        String username = "root";//ReadInput.readInput("Please enter username");
-        String password = "root";//ReadInput.readInput("Please enter password");
+        MetadataManager metadataManager = new MetadataManager();
+        System.out.println(metadataManager.tableExists("TestDB","test"));
 
-        DBMS dbms = DBMS.getInstance();
-        //if valid user
-        dbms.setUsername(username);
-        String query = ReadInput.readInput("Enter Query");
-        do{
-            sqlParser.validateQuery(query);
-            query = ReadInput.readInput("Enter Query");
-        }while(query!="quit");
+//        SqlParser sqlParser = new SqlParser();
+//        Transaction transaction = new Transaction();
+//        String username = "root";//ReadInput.readInput("Please enter username");
+//        String password = "root";//ReadInput.readInput("Please enter password");
+//
+//        DBMS dbms = DBMS.getInstance();
+//        //if valid user
+//        dbms.setUsername(username);
+//        transaction.generateTransactionId(username);
+//        dbms.setTransactionId(transaction.getId());
+//        String query = "use TestDB;";//ReadInput.readInput("Enter Query");
+//        do{
+//            sqlParser.validateQuery(query);
+//            query = ReadInput.readInput("Enter Query");
+//        }while(query!="quit");
 
 
 //
@@ -52,7 +58,7 @@ public class App {
 //        MetadataManager metadataManager = new MetadataManager();
 //        metadataManager.getMetadataByDatabaseAndTable("CollegeDatabase","course");
 
-        createStatement();
+        //createStatement();
     }
 
     private static void createStatement() {

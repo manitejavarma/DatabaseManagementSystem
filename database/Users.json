@@ -3,7 +3,8 @@
     "username": "root",
     "password": "root",
     "database": [
-      "test"
+      "test",
+      "mani"
     ]
   },
   {
@@ -13,7 +14,8 @@
       "test",
       "test3",
       "test2",
-      "tes4"
+      "tes4",
+      "mani"
     ]
   }
 ]

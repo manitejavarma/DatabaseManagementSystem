@@ -137,4 +137,46 @@ public class MetadataManager {
             }
         }
     }
+
+    public boolean databaseExists(String databaseName){
+        Map<String, List<Metadata>> dataDictionary = createDataDictionary();
+        List<Metadata> metadataList = dataDictionary.getOrDefault(databaseName, null);
+        if(metadataList == null){
+            return false;
+        }else{
+            return true;
+        }
+    }
+
+    public boolean tableExists(String databaseName,String tableName){
+        boolean exists = false;
+        Map<String, List<Metadata>> dataDictionary = createDataDictionary();
+        List<Metadata> metadataList = dataDictionary.getOrDefault(databaseName, null);
+        if (metadataList.size() > 0) {
+            for (Metadata m: metadataList) {
+                if (m.getTableName().equalsIgnoreCase(tableName)) {
+                    exists = true;
+                }
+            }
+        }else {
+            exists =false;
+        }
+        return exists;
+    }
+
+    public boolean columnExists(String databaseName, String tableName,String column){
+        boolean exists = false;
+        Map<String, List<Metadata>> dataDictionary = createDataDictionary();
+        List<Metadata> metadataList = dataDictionary.getOrDefault(databaseName, null);
+        if (metadataList.size() > 0) {
+            for (Metadata m: metadataList) {
+                if (m.getTableName().equalsIgnoreCase(tableName)) {
+                    if(m.getColumns().containsKey(column)){
+                        exists = true;
+                    }
+                }
+            }
+        }
+        return exists;
+    }
 }
