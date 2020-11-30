@@ -1,10 +1,10 @@
 package DBMS;
 
-import DBMS.attributetype.AttributeType;
 import DBMS.metadata.Metadata;
 import DBMS.metadata.MetadataManager;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.*;
 
 public class SemanticController {
@@ -46,7 +46,6 @@ public class SemanticController {
 
         transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
 
-
         HashMap<String,String> columnsAndValues = new HashMap<>();
         if(columns[0].isEmpty()){
             //Setting columns and values to insert into CSV
@@ -57,17 +56,18 @@ public class SemanticController {
             }
         }else{
 
-
-
             //Setting columns and values to insert into CSV
             for(int i =0;i<columns.length;i++){
                 columnsAndValues.put(columns[i],values[i]);
             }
         }
+        LocalDateTime startOfQuery  = java.time.LocalDateTime.now();
+
         sqlToCSV.insertQuery(DBMS.getInstance().getActiveDatabase(), transaction.getCopyTableName(DBMS.getInstance().getActiveDatabase(),tableName),columnsAndValues);
 
+        LocalDateTime endOfQuery  = java.time.LocalDateTime.now();
         //Transaction Log
-        transaction.insertTransactionLog(tableName);
+        transaction.insertTransactionLog(tableName,"insert",startOfQuery,endOfQuery);
 
         DBMS.getInstance().getTables().add(tableName);
     }
@@ -116,11 +116,13 @@ public class SemanticController {
 
         transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
 
+        LocalDateTime startOfQuery  = java.time.LocalDateTime.now();
         //updating to Table
         sqlToCSV.updateTable(DBMS.getInstance().getActiveDatabase(), transaction.getCopyTableName(DBMS.getInstance().getActiveDatabase(),tableName), set,conditions);
 
+        LocalDateTime endOfQuery  = java.time.LocalDateTime.now();
         //transaction
-        transaction.insertTransactionLog(tableName);
+        transaction.insertTransactionLog(tableName, "update",startOfQuery, endOfQuery);
 
         DBMS.getInstance().getTables().add(tableName);
     }
@@ -164,13 +166,14 @@ public class SemanticController {
 
         transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
 
+        LocalDateTime startOfQuery  = java.time.LocalDateTime.now();
         sqlToCSV.deleteRows(DBMS.getInstance().getActiveDatabase(),transaction.getCopyTableName(DBMS.getInstance().getActiveDatabase(),tableName),conditions);
 
-
+        LocalDateTime endOfQuery  = java.time.LocalDateTime.now();
 
 
         //Transaction Log
-        transaction.insertTransactionLog(tableName);
+        transaction.insertTransactionLog(tableName, "delete",startOfQuery, endOfQuery);
 
         DBMS.getInstance().getTables().add(tableName);
     }

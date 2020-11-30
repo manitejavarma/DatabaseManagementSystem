@@ -3,7 +3,9 @@ package DBMS;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
+import java.time.Duration;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
@@ -45,13 +47,16 @@ public class Transaction {
 
 
 
-    public void insertTransactionLog(String tableName) throws IOException {
+    public void insertTransactionLog(String tableName,String typeOfQuery, LocalDateTime startOfQuery, LocalDateTime endOfQuery) throws IOException {
         HashMap<String,String> columnsAndValues = new HashMap<>();
         columnsAndValues.put("username",DBMS.getInstance().getUsername());
         columnsAndValues.put("transactionid",DBMS.getInstance().getTransactionId());
         columnsAndValues.put("table",tableName);
         columnsAndValues.put("transaction_state",TRANSACTION_STATE.PROCESS.name());
-        columnsAndValues.put("timestamp", String.valueOf(LocalDate.now()));
+        columnsAndValues.put("startTimeStamp", String.valueOf(startOfQuery));
+        columnsAndValues.put("endTimeStamp", String.valueOf(endOfQuery));
+        columnsAndValues.put("executionTime",String.valueOf(Duration.between(startOfQuery,endOfQuery).getSeconds() + "." + Duration.between(startOfQuery,endOfQuery).getNano()));
+        columnsAndValues.put("queryType",typeOfQuery);
         newCSVManager.insertCSV(transactionFilePath,columnsAndValues);
     }
 
@@ -121,7 +126,10 @@ public class Transaction {
         columns.add("transactionid");
         columns.add("table");
         columns.add("transaction_state");
-        columns.add("timestamp");
+        columns.add("startTimeStamp");
+        columns.add("endTimeStamp");
+        columns.add("executionTime");
+        columns.add("queryType");
         NewCSVManager newCSVManager = new NewCSVManager();
         if(newCSVManager.doesDataExistOnCondition(filepath,conditions,columns)){
             return true;
