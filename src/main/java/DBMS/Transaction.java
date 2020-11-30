@@ -1,10 +1,10 @@
 package DBMS;
 
-import tech.tablesaw.api.Table;
-
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Random;
 
@@ -31,9 +31,11 @@ public class Transaction {
     }
 
     public  void copyTable(String databaseName,String tableName) throws IOException {
+
         String copyTableName = getCopyTableName(databaseName,tableName);
-        Table table = Table.read().csv("database/"+databaseName+"/"+tableName+".csv");
-        table.write().csv("database/"+databaseName+"/"+copyTableName+".csv");
+        File orig = new File("database/"+databaseName+"/"+tableName+".csv");
+        File copyFile = new File("database/"+databaseName+"/"+copyTableName+".csv");
+        Files.copy(orig.toPath(), copyFile.toPath());
     }
 
     public String getCopyTableName(String databaseName,String tableName) throws IOException {
@@ -68,6 +70,7 @@ public class Transaction {
             throw new IOException("Unable to rename file" + origfile.getName());
         }
     }
+
 
     public void commit(String database, String tableName){
         String copyTableName = DBMS.getInstance().getTransactionId()+"_"+tableName;
@@ -106,6 +109,27 @@ public class Transaction {
         }catch (Exception e){
             e.printStackTrace();
         }
+    }
+
+    public boolean checkIfAnyTransactionUsingSametable(String tableName) throws IOException {
+        String filepath = transactionFilePath;
+        HashMap<String,String> conditions = new HashMap<>();
+        conditions.put("table",tableName);
+        conditions.put("transaction_state",TRANSACTION_STATE.PROCESS.name());
+        ArrayList<String> columns = new ArrayList<>();
+        columns.add("username");
+        columns.add("transactionid");
+        columns.add("table");
+        columns.add("transaction_state");
+        columns.add("timestamp");
+        NewCSVManager newCSVManager = new NewCSVManager();
+        if(newCSVManager.doesDataExistOnCondition(filepath,conditions,columns)){
+            return true;
+        }else{
+            return false;
+        }
+
+
     }
 
 }
