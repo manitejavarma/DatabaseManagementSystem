@@ -5,6 +5,7 @@ import DBMS.metadata.Metadata;
 import DBMS.metadata.MetadataManager;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -18,16 +19,17 @@ public class DataDump {
         newCSVManager = new NewCSVManager();
     }
 
-    private void insertValueDump(String databaseName, String tableName) throws IOException {
+    private String insertValueDump(String databaseName, String tableName) throws IOException {
         String insertquerystatements = "";
         ArrayList<ArrayList<String>> data = newCSVManager.getAllDataFromTable("database/"+databaseName+"/"+tableName+".csv");
         for(ArrayList<String> row : data){
             insertquerystatements = insertquerystatements + "insert into table " + tableName + " values (";
             insertquerystatements = insertquerystatements + join(row) + ");";
         }
+        return insertquerystatements;
     }
 
-    private void createTableDump(String databaseName,String tableName) {
+    private String createTableDump(String databaseName,String tableName) {
         MetadataManager metadataManager = new MetadataManager();
         Metadata metadata = metadataManager.getMetadataByDatabaseAndTable(databaseName,tableName);
         String createStatement = "";
@@ -37,6 +39,23 @@ public class DataDump {
         }
         if(metadata.getPrimaryKeys().size()>0){
             createStatement = createStatement + String.join(",",metadata.getPrimaryKeys());
+        }
+
+        createStatement = createStatement + ");";
+
+        return createStatement;
+    }
+
+    public void createDatabaseDump() throws IOException {
+        String dump = "";
+        String databaseName = DBMS.getInstance().getActiveDatabase();
+        MetadataManager metadataManager = new MetadataManager();
+        ArrayList<String> tableList = metadataManager.getTablesFromDatabase(databaseName);
+        for(String table:tableList){
+            dump = dump + createTableDump(databaseName,table);
+        }
+        for(String table:tableList){
+            dump = dump + insertValueDump(databaseName,table);
         }
     }
 

@@ -83,6 +83,18 @@ public class MetadataManager {
         return dataDictionary;
     }
 
+    public ArrayList<String> getTablesFromDatabase(String databaseName){
+        ArrayList<String> teamList = new ArrayList<>();
+        Map<String, List<Metadata>> dataDictionary = createDataDictionary();
+        List<Metadata> metadataList = dataDictionary.getOrDefault(databaseName, null);
+        if (metadataList.size() > 0) {
+            for (Metadata m: metadataList) {
+                teamList.add(m.getTableName());
+            }
+        }
+        return teamList;
+    }
+
     public List<Metadata> getMetadataListByDatabase(String dbName) {
         Map<String, List<Metadata>> dataDictionary = createDataDictionary();
         return dataDictionary.getOrDefault(dbName, null);
