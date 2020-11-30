@@ -9,6 +9,7 @@ import java.util.*;
 
 public class SemanticController {
 
+    private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SemanticController.class);
     SQLToCSV sqlToCSV;
     MetadataManager metadataManager;
     Transaction transaction;
@@ -85,6 +86,7 @@ public class SemanticController {
         metadataManager.createTableMetadata(DBMS.getInstance().getActiveDatabase(), tableName,metadata);
         ArrayList<String> listOfColumns = new ArrayList<String>(metadata.getColumns().keySet());
         sqlToCSV.createTable(DBMS.getInstance().getActiveDatabase(), tableName,listOfColumns);
+        log.info("New table created " + tableName);
     }
 
     public void updateTable(Map<String, String> updateFields) throws IOException {
@@ -136,6 +138,7 @@ public class SemanticController {
 
         metadataManager.createDatabase( databaseName,DBMS.getInstance().getUsername());
         UserControl.grantAccessToDatabase(DBMS.getInstance().getUsername(),databaseName);
+        log.info("New database created " + databaseName);
     }
 
     public void grantAccess(String databaseName,String username) throws IOException {
@@ -176,6 +179,8 @@ public class SemanticController {
         transaction.insertTransactionLog(tableName, "delete",startOfQuery, endOfQuery);
 
         DBMS.getInstance().getTables().add(tableName);
+
+        log.info("table deleted : " + tableName);
     }
 
     public void selectTable(Map<String, String> selectFields) throws IOException {

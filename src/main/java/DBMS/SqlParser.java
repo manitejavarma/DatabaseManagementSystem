@@ -16,6 +16,7 @@ import java.util.regex.Pattern;
 
 public class SqlParser implements ISqlParser {
 	private final static Logger logger = Logger.getLogger(SqlParser.class.getName());
+	private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SqlParser.class);
 	MetadataManager metadataManager;
 
 	SqlParser(){
@@ -25,6 +26,7 @@ public class SqlParser implements ISqlParser {
     
 	public void validateQuery(String query) throws IOException {
 		logger.info("Invoked validateQuery method");
+		log.info("Query " + query + "from User " + DBMS.getInstance().getUsername());
 		if(query.toLowerCase().contains("select")){
 			selectQuery(query);
 		}else if(query.toLowerCase().contains("create database")){
@@ -45,6 +47,8 @@ public class SqlParser implements ISqlParser {
 			commit();
 		}else if(query.toLowerCase().contains("rollback;")){
 			rollback();
+		}else{
+			System.out.println("Please enter valid command");
 		}
 	}
 
