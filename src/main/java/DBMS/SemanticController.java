@@ -46,24 +46,12 @@ public class SemanticController {
         sqlToCSV.insertQuery(DBMS.getInstance().getActiveDatabase(), tableName,columnsAndValues);
     }
 
-    public void createTable() throws IOException {
+    public void createTable(Metadata metadata) throws IOException {
 
-        String dummyTableName = "test123";
+        String tableName = metadata.getTableName();
 
-        Metadata dummyMetadata = new Metadata();
-        HashMap<String, AttributeType> columns = new HashMap();
-        columns.put("id",AttributeType.STRING);
-        columns.put("name",AttributeType.STRING);
-        columns.put("department",AttributeType.STRING);
-        ArrayList<String> primaryKeys = new ArrayList<>();
-        primaryKeys.add("id");
-        dummyMetadata.setTableName(dummyTableName);
-        dummyMetadata.setForeignKeys(new ArrayList<>());
-        dummyMetadata.setColumns(columns);
-        dummyMetadata.setPrimaryKeys(primaryKeys);
-
-        metadataManager.createTableMetadata(DBMS.getInstance().getActiveDatabase(), dummyTableName,dummyMetadata);
-        ArrayList<String> listOfColumns = new ArrayList<String>(dummyMetadata.getColumns().keySet());
-        sqlToCSV.createTable(DBMS.getInstance().getActiveDatabase(), dummyTableName,listOfColumns);
+        metadataManager.createTableMetadata(DBMS.getInstance().getActiveDatabase(), tableName,metadata);
+        ArrayList<String> listOfColumns = new ArrayList<String>(metadata.getColumns().keySet());
+        sqlToCSV.createTable(DBMS.getInstance().getActiveDatabase(), tableName,listOfColumns);
     }
 }

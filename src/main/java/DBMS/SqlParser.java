@@ -1,4 +1,10 @@
-import java.util.ArrayList;
+package DBMS;
+
+import DBMS.attributetype.AttributeType;
+import DBMS.metadata.Metadata;
+import DBMS.utils.Constants;
+
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
@@ -7,16 +13,11 @@ import java.util.logging.Logger;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.omg.PortableInterceptor.SYSTEM_EXCEPTION;
-
-import DBMS.attributetype.AttributeType;
-import DBMS.metadata.Metadata;
-import utils.Constants;
-
 public class SqlParser implements ISqlParser {
 	private final static Logger logger = Logger.getLogger(SqlParser.class.getName());
+
     
-	public void validateQuery(String query) {
+	public void validateQuery(String query) throws IOException {
 		logger.info("Invoked validateQuery method");
 		if(query.toLowerCase().contains("select")){
 			selectQuery(query);
@@ -119,7 +120,7 @@ public class SqlParser implements ISqlParser {
 				
 	}
 
-	void createQuery(String query) {
+	void createQuery(String query) throws IOException {
 		Metadata metadata = new Metadata();
 		Map<String,String[]> createTableFields = new HashMap<String, String[]>();
 		Map<String,AttributeType> columns = new HashMap<String, AttributeType>();
@@ -137,7 +138,7 @@ public class SqlParser implements ISqlParser {
 			AttributeType attribute;
 			for(String i : column) {
 				seperateFields =i.split(" ");
-				attribute = AttributeType.valueOf(seperateFields[1]);
+				attribute = AttributeType.valueOf(seperateFields[1].toUpperCase());
 				columns.put(seperateFields[0], attribute);
 			}
 			
@@ -147,6 +148,9 @@ public class SqlParser implements ISqlParser {
 			metadata.setColumns(columns);
 			metadata.setPrimaryKeys(primary);
 		}
+		SemanticController semanticController = new SemanticController();
+		semanticController.createTable(metadata);
+
 	}
 	
 	void useDatabaseQuery(String query) {
@@ -155,6 +159,7 @@ public class SqlParser implements ISqlParser {
 		boolean matchFound = matcher.find();
 		if(matchFound) {
 			String database = matcher.group(1);
+			DBMS.getInstance().setActiveDatabase(database);
 		}
 	}
 	

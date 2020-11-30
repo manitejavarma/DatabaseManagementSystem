@@ -37,7 +37,6 @@ public class SQLToCSV {
 //        HashMap<String,String> conditions = new HashMap<>();
 //        conditions.put("C","this");
         newCSVManager.updateCSV("database/"+databaseName+"/"+tableName+".csv",conditions,set);
-
     }
     public void selectTable(String database, String table, ArrayList<String> columns, HashMap<String,String> conditions) throws IOException {
 //        HashMap<String,String> conditions = new HashMap<>();
@@ -48,7 +47,6 @@ public class SQLToCSV {
 //        columns.add("C");
 //        columns.add("D");
         newCSVManager.readCSV("database/"+database+"/"+table+".csv",conditions,columns);
-
     }
 
     public void doAction() throws IOException {
