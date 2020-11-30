@@ -1,0 +1,47 @@
+2020-11-30 15:05:41,407 INFO DBMS.SqlParser validateQuery Query create from User root 
+2020-11-30 15:05:48,409 INFO DBMS.SqlParser validateQuery Query create database shwetha;from User root 
+2020-11-30 15:05:49,189 INFO DBMS.SemanticController createDatabase New database created shwetha 
+2020-11-30 15:10:12,240 INFO DBMS.SqlParser validateQuery Query create Mani;from User root 
+2020-11-30 15:10:23,470 INFO DBMS.SqlParser validateQuery Query create database Mani;from User root 
+2020-11-30 15:11:26,617 INFO DBMS.SemanticController createDatabase New database created Mani 
+2020-11-30 15:12:07,122 INFO DBMS.SqlParser validateQuery Query create shwetha;from User root 
+2020-11-30 15:12:17,938 INFO DBMS.SqlParser validateQuery Query create database shwetha;from User root 
+2020-11-30 15:12:33,974 INFO DBMS.SemanticController createDatabase New database created shwetha 
+2020-11-30 15:13:30,634 INFO DBMS.SqlParser validateQuery Query use shwetha;from User root 
+2020-11-30 15:13:41,182 INFO DBMS.SqlParser validateQuery Query create table student(name string,department string,primary key(name));from User root 
+2020-11-30 15:14:00,609 INFO DBMS.SemanticController createTable New table created student 
+2020-11-30 15:14:29,306 INFO DBMS.SqlParser validateQuery Query create table student(name string,department string,primary key(name));from User root 
+2020-11-30 15:15:39,033 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE');from User root 
+2020-11-30 15:16:21,227 INFO DBMS.SqlParser validateQuery Query rollback;from User root 
+2020-11-30 15:16:36,594 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE');from User root 
+2020-11-30 15:16:45,138 INFO DBMS.SqlParser validateQuery Query commit;from User root 
+2020-11-30 15:19:07,589 INFO DBMS.SqlParser validateQuery Query update student set department = "Mech" where name = "swetha";from User root 
+2020-11-30 15:19:37,141 INFO DBMS.SqlParser validateQuery Query update student set department = "Mech" where name = "mani";from User root 
+2020-11-30 15:20:05,372 INFO DBMS.SqlParser validateQuery Query commitfrom User root 
+2020-11-30 15:20:07,847 INFO DBMS.SqlParser validateQuery Query commit;from User root 
+2020-11-30 15:23:59,242 INFO DBMS.SqlParser validateQuery Query update student set department = "Mech" where name = "mani";from User root 
+2020-11-30 15:24:35,868 INFO DBMS.SqlParser validateQuery Query use from User root 
+2020-11-30 15:24:40,483 INFO DBMS.SqlParser validateQuery Query use shwetha;from User root 
+2020-11-30 15:24:43,693 INFO DBMS.SqlParser validateQuery Query update student set department = "Mech" where name = "mani";from User root 
+2020-11-30 15:25:06,574 INFO DBMS.SqlParser validateQuery Query commit;from User root 
+2020-11-30 15:25:12,819 INFO DBMS.SqlParser validateQuery Query update student set department = "Mech" where name = "mani1";from User root 
+2020-11-30 15:29:22,510 INFO DBMS.SqlParser validateQuery Query rollback;from User root 
+2020-11-30 15:30:49,221 INFO DBMS.SqlParser validateQuery Query grant shwetha to 'mani';from User root 
+2020-11-30 15:31:33,298 INFO DBMS.SqlParser validateQuery Query insert into student values('swetha','CSE');from User root 
+2020-11-30 15:31:39,466 INFO DBMS.SqlParser validateQuery Query insert into student values('rajveen','CSE');from User root 
+2020-11-30 15:31:44,287 INFO DBMS.SqlParser validateQuery Query commit;from User root 
+2020-11-30 15:32:15,408 INFO DBMS.SqlParser validateQuery Query insert into student values('rajveen','CSE');from User root 
+2020-11-30 15:32:51,046 INFO DBMS.SqlParser validateQuery Query delete from student where name = "swetha";from User root 
+2020-11-30 15:32:56,205 INFO DBMS.SqlParser validateQuery Query commit;from User root 
+2020-11-30 15:32:58,541 INFO DBMS.SqlParser validateQuery Query delete from student where name = "swetha";from User root 
+2020-11-30 15:32:58,725 INFO DBMS.SemanticController deleteTable table deleted : student 
+2020-11-30 15:33:13,797 INFO DBMS.SqlParser validateQuery Query commit;from User root 
+2020-11-30 15:33:47,535 INFO DBMS.SqlParser validateQuery Query select name from student where name = "swetha";from User root 
+2020-11-30 15:33:57,228 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
+2020-11-30 15:34:15,663 INFO DBMS.SqlParser validateQuery Query select name from student where department = "Mech";from User root 
+2020-11-30 15:42:22,112 INFO DBMS.SqlParser validateQuery Query use shwetha;from User root 
+2020-11-30 15:42:37,449 INFO DBMS.SqlParser validateQuery Query select * from student where name = "swetha";from User root 
+2020-11-30 15:44:43,408 INFO DBMS.SqlParser validateQuery Query use shwetha;from User root 
+2020-11-30 15:45:00,921 INFO DBMS.SqlParser validateQuery Query select * from student where name = "swetha";from User root 
+2020-11-30 15:45:16,975 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
+2020-11-30 15:45:34,905 INFO DBMS.SqlParser validateQuery Query select * from student where name = "mani";from User root 

@@ -187,12 +187,18 @@ public class SemanticController {
         String tableName = selectFields.get("table");
         HashMap<String,String> conditions = new HashMap<>();
         conditions.put(selectFields.get("whereColumn"),selectFields.get("whereValue"));
-        ArrayList<String> columns = new ArrayList<>();
-        columns.add(selectFields.get("selectColumn"));
-
+        List<String> columns = new ArrayList<>();
         ArrayList<String> columnsToSemanticCheck = new ArrayList<>();
-        columnsToSemanticCheck.add(selectFields.get("selectColumn"));
         columnsToSemanticCheck.add(selectFields.get("whereColumn"));
+        if(selectFields.get("selectColumn").contains("*")){
+            columns = sqlToCSV.getHeaders(DBMS.getInstance().getActiveDatabase(), tableName);
+        }else{
+            columns.add(selectFields.get("selectColumn"));
+            columnsToSemanticCheck.add(selectFields.get("selectColumn"));
+        }
+
+
+
 
         //semantic check
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
@@ -208,7 +214,9 @@ public class SemanticController {
         }
 
 
-        sqlToCSV.selectTable(DBMS.getInstance().getActiveDatabase(),tableName,columns,conditions);
+
+
+        sqlToCSV.selectTable(DBMS.getInstance().getActiveDatabase(),tableName, (ArrayList<String>) columns,conditions);
     }
 
     public void commit(){
