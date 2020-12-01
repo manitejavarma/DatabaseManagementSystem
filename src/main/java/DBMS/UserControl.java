@@ -63,7 +63,6 @@ public class UserControl {
                 .anyMatch(x -> x.getUsername().equals(username));
     }
 
-    //Pending : serialization to Users.json
     public static boolean grantAccessToDatabase(String username, String database) throws IOException {
         String path = "database/Users.json";
         BufferedReader bufferedReader = new BufferedReader(new FileReader(path));
