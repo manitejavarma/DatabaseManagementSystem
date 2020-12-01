@@ -1,5 +1,0 @@
-create table test2(name STRING,department STRING,PRIMARY KEY name); 
-create table test3(name STRING,department STRING,PRIMARY KEY name); 
-insert into test3 values ('mani','CSE'); 
-insert into test3 values ('mani','CSE'); 
-insert into test3 values ('mani','CSE'); 

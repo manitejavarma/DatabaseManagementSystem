@@ -1,10 +1,12 @@
 package DBMS;
 
 import DBMS.attributetype.AttributeType;
+import DBMS.erd.ERDiagramMaker;
 import DBMS.metadata.Metadata;
 import DBMS.metadata.MetadataManager;
 import DBMS.utils.Constants;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -47,9 +49,29 @@ public class SqlParser implements ISqlParser {
 			commit();
 		}else if(query.toLowerCase().contains("rollback;")){
 			rollback();
+		}else if(query.toLowerCase().contains("generate")){
+			erd(query);
+		}else if(query.toLowerCase().contains("dump")){
+			generatedump(query);
 		}else{
 			System.out.println("Please enter valid command");
 		}
+	}
+
+	private void generatedump(String query) throws IOException {
+		String[] str = query.split(" ");
+		String databaseName = str[1].replace(";","");
+
+		DataDump dataDump = new DataDump();
+		dataDump.createDatabaseDump(databaseName);
+	}
+
+	private void erd(String query) {
+		String[] str = query.split(" ");
+		String databaseName = str[2].replace(";","");
+
+        ERDiagramMaker erDiagramMaker = new ERDiagramMaker();
+        erDiagramMaker.createERDiagram(databaseName);
 	}
 
 	private void commit() {
@@ -189,18 +211,29 @@ public class SqlParser implements ISqlParser {
 
 	}
 	
-	void useDatabaseQuery(String query) {
+	void useDatabaseQuery(String query) throws FileNotFoundException {
 		Pattern pattern = Pattern.compile(Constants.USE_DATABASE, Pattern.CASE_INSENSITIVE);
 		Matcher matcher = pattern.matcher(query);
 		boolean matchFound = matcher.find();
 		if(matchFound) {
 			String database = matcher.group(1);
-			DBMS.getInstance().setActiveDatabase(database);
 
-			if(!metadataManager.databaseExists(DBMS.getInstance().getActiveDatabase())){
-				System.out.println("database " + database +"is not present. Please retry");
+
+			if(!metadataManager.databaseExists(database)){
+				System.out.println("database " + database +" is not present. Please retry");
 				return;
 			}
+
+			UserControl userControl = new UserControl();
+			if(!userControl.doesUserHaveAccessToDB(DBMS.getInstance().getUsername(), database)){
+				System.out.println("User doesn't have access to DB. please retry.");
+				return;
+			}
+			DBMS.getInstance().setActiveDatabase(database);
+
+
+
+
 		}
 	}
 	

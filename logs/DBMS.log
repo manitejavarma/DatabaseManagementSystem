@@ -160,3 +160,22 @@
 2020-12-01 08:51:25,030 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
 2020-12-01 08:51:30,304 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
 2020-12-01 08:51:42,458 INFO DBMS.SqlParser validateQuery Query select * from student where name = "mani";from User root 
+2020-12-01 13:39:53,685 INFO Query use rajveen;from User root 
+2020-12-01 13:40:20,341 INFO Query generate erd rajveen;from User root 
+2020-12-01 13:41:06,396 INFO Query dump rajveen;from User root 
+2020-12-01 13:54:06,445 INFO Query create database demo;from User root 
+2020-12-01 13:55:53,479 INFO Query create database demo;from User root 
+2020-12-01 13:56:41,927 INFO New database created demo 
+2020-12-01 13:57:45,897 INFO Query create database demo;from User root 
+2020-12-01 13:57:46,169 INFO New database created demo 
+2020-12-01 14:07:37,536 INFO Query generate faculty;from User root 
+2020-12-01 14:08:01,989 INFO Query use faculty;from User root 
+2020-12-01 14:08:14,288 INFO Query use CollegeDatabase;from User root 
+2020-12-01 14:08:33,227 INFO Query use CollegeDatabase;from User root 
+2020-12-01 14:08:58,012 INFO Query use CollegeDatabase;from User root 
+2020-12-01 14:11:27,387 INFO Query use CollegeDatabase;from User root 
+2020-12-01 14:12:09,767 INFO Query use CollegeDatabase;from User root 
+2020-12-01 14:12:22,843 INFO Query use CollegeDatabase;from User root 
+2020-12-01 14:12:35,168 INFO Query generate erd CollegeDatabase;from User root 
+2020-12-01 14:16:45,798 INFO Query generate erd CollegeDatabase;from User root 
+2020-12-01 14:31:16,231 INFO Query generate erd CollegeDatabase;from User root 
