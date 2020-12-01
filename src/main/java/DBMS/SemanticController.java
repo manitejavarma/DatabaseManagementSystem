@@ -98,7 +98,7 @@ public class SemanticController {
         metadataManager.createTableMetadata(DBMS.getInstance().getActiveDatabase(), tableName,metadata);
         ArrayList<String> listOfColumns = new ArrayList<String>(metadata.getColumns().keySet());
         sqlToCSV.createTable(DBMS.getInstance().getActiveDatabase(), tableName,listOfColumns);
-        log.info("New table created " + tableName);
+        log.info("New table created : " + tableName + " by user " + DBMS.getInstance().getUsername());
     }
 
     public void updateTable(Map<String, String> updateFields) throws IOException {
@@ -161,7 +161,7 @@ public class SemanticController {
 
         metadataManager.createDatabase( databaseName,DBMS.getInstance().getUsername());
         UserControl.grantAccessToDatabase(DBMS.getInstance().getUsername(),databaseName);
-        log.info("New database created " + databaseName);
+        log.info("New database created :" + databaseName + " by user " + DBMS.getInstance().getUsername());
     }
 
     public void grantAccess(String databaseName,String username) throws IOException {
@@ -214,7 +214,7 @@ public class SemanticController {
 
         DBMS.getInstance().getTables().add(tableName);
 
-        log.info("table deleted : " + tableName);
+        log.info("table deleted : " + tableName + " by user " + DBMS.getInstance().getUsername());
     }
 
     public void selectTable(Map<String, String> selectFields) throws IOException {
