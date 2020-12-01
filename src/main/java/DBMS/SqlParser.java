@@ -96,8 +96,9 @@ public class SqlParser implements ISqlParser {
 			selectFields.put("whereValue", matcher.group(4).replace("\"", "").replace("\'", ""));
 			SemanticController semanticController = new SemanticController();
 			semanticController.selectTable(selectFields);
+		}else{
+			System.out.println("Invalid statement");
 		}
-
 
 		//call to semantic parser
 		//if valid, func call to execute the query, pass the map as input 
@@ -113,6 +114,8 @@ public class SqlParser implements ISqlParser {
 			createDBFields.put("database", matcher.group(1));
 			SemanticController semanticController = new SemanticController();
 			semanticController.createDatabase(createDBFields.get("database"));
+		}else{
+			System.out.println("Invalid statement");
 		}
 
 		//call to semantic parser
@@ -130,10 +133,13 @@ public class SqlParser implements ISqlParser {
 			updateFields.put("value", matcher.group(3).replace("\"", "").replace("\'", ""));
 			updateFields.put("whereColumn", matcher.group(5));
 			updateFields.put("whereValue", matcher.group(6).replace("\"", "").replace("\'", ""));
+			SemanticController semanticController = new SemanticController();
+			semanticController.updateTable(updateFields);
+		}else{
+			System.out.println("Invalid statement");
 		}
 
-		SemanticController semanticController = new SemanticController();
-		semanticController.updateTable(updateFields);
+
 		//call to semantic parser
 		//if valid, func call to execute the query, pass the map as input 
 	}
@@ -147,9 +153,12 @@ public class SqlParser implements ISqlParser {
 			deleteFields.put("table", matcher.group(1));
 			deleteFields.put("whereColumn", matcher.group(2));
 			deleteFields.put("whereValue", matcher.group(3).replace("\"", "").replace("\'", ""));
+			SemanticController semanticController = new SemanticController();
+			semanticController.deleteTable(deleteFields);
+		}else{
+			System.out.println("Invalid statement");
 		}
-		SemanticController semanticController = new SemanticController();
-		semanticController.deleteTable(deleteFields);
+
 
 		
 		//call to semantic parser
@@ -172,11 +181,14 @@ public class SqlParser implements ISqlParser {
 				values[i]=values[i].replace("\"", "").replace("\'", "");
 			}
 			insertFields.put("values", values);
+			SemanticController semanticController = new SemanticController();
+			semanticController.insert(insertFields);
+		}else{
+			System.out.println("Invalid statement");
 		}
 		//call to semantic parser
 		//if valid, func call to execute the query, pass the map as input 
-		SemanticController semanticController = new SemanticController();
-		semanticController.insert(insertFields);
+
 	}
 
 	void createQuery(String query) throws IOException {
@@ -205,9 +217,12 @@ public class SqlParser implements ISqlParser {
 			metadata.setTableName(matcher.group(1));
 			metadata.setColumns(columns);
 			metadata.setPrimaryKeys(primary);
+			SemanticController semanticController = new SemanticController();
+			semanticController.createTable(metadata);
+		}else{
+			System.out.println("Invalid statement");
 		}
-		SemanticController semanticController = new SemanticController();
-		semanticController.createTable(metadata);
+
 
 	}
 	
@@ -217,23 +232,18 @@ public class SqlParser implements ISqlParser {
 		boolean matchFound = matcher.find();
 		if(matchFound) {
 			String database = matcher.group(1);
-
-
 			if(!metadataManager.databaseExists(database)){
 				System.out.println("database " + database +" is not present. Please retry");
 				return;
 			}
-
 			UserControl userControl = new UserControl();
 			if(!userControl.doesUserHaveAccessToDB(DBMS.getInstance().getUsername(), database)){
 				System.out.println("User doesn't have access to DB. please retry.");
 				return;
 			}
 			DBMS.getInstance().setActiveDatabase(database);
-
-
-
-
+		}else{
+			System.out.println("Invalid statement");
 		}
 	}
 	
@@ -247,6 +257,8 @@ public class SqlParser implements ISqlParser {
 			grantFields.put("user", matcher.group(2).replace("\"", "").replace("\'", ""));
 			SemanticController semanticController = new SemanticController();
 			semanticController.grantAccess(grantFields.get("database"),grantFields.get("user"));
+		}else{
+			System.out.println("Invalid statement");
 		}
 	}
 	
