@@ -21,6 +21,10 @@ public class SemanticController {
     }
 
     public void insert(Map<String, String[]> insertFields) throws IOException {
+        if(DBMS.getInstance().getActiveDatabase() == null){
+            System.out.println("Please select database first");
+            return;
+        }
         String tableName = insertFields.get("table")[0];
         String[] columns = insertFields.get("columns");
         String[] values = insertFields.get("values");
@@ -74,7 +78,10 @@ public class SemanticController {
     }
 
     public void createTable(Metadata metadata) throws IOException {
-
+        if(DBMS.getInstance().getActiveDatabase() == null){
+            System.out.println("Please select database first");
+            return;
+        }
         String tableName = metadata.getTableName();
 
         //semantic check
@@ -90,6 +97,10 @@ public class SemanticController {
     }
 
     public void updateTable(Map<String, String> updateFields) throws IOException {
+        if(DBMS.getInstance().getActiveDatabase() == null){
+            System.out.println("Please select database first");
+            return;
+        }
         String tableName = updateFields.get("table");
         ArrayList<String> columns = new ArrayList<>();
         HashMap<String,String> set = new HashMap<>();
@@ -146,6 +157,10 @@ public class SemanticController {
     }
 
     public void deleteTable(Map<String, String> deleteFields) throws IOException {
+        if(DBMS.getInstance().getActiveDatabase() == null){
+            System.out.println("Please select database first");
+            return;
+        }
         String tableName = deleteFields.get("table");
         HashMap<String,String> conditions = new HashMap<>();
         conditions.put(deleteFields.get("whereColumn"),deleteFields.get("whereValue"));
@@ -184,6 +199,10 @@ public class SemanticController {
     }
 
     public void selectTable(Map<String, String> selectFields) throws IOException {
+        if(DBMS.getInstance().getActiveDatabase() == null){
+            System.out.println("Please select database first");
+            return;
+        }
         String tableName = selectFields.get("table");
         HashMap<String,String> conditions = new HashMap<>();
         conditions.put(selectFields.get("whereColumn"),selectFields.get("whereValue"));

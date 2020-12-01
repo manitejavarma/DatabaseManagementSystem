@@ -4,6 +4,7 @@ import DBMS.attributetype.AttributeType;
 import DBMS.metadata.Metadata;
 import DBMS.metadata.MetadataManager;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.Map;
@@ -19,6 +20,10 @@ public class App {
         Transaction transaction = new Transaction();
         String username = "root";//ReadInput.readInput("Please enter username");
         String password = "root";//ReadInput.readInput("Please enter password");
+
+//        DataDump dataDump = new DataDump();
+//        dataDump.createDatabaseDump("TestDB");
+
 
         DBMS dbms = DBMS.getInstance();
         //if valid user
