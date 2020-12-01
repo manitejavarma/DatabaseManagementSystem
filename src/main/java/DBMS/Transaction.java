@@ -4,7 +4,6 @@ import java.io.File;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.time.Duration;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -14,11 +13,11 @@ import java.util.Random;
 public class Transaction {
     String id;
     String user;
-    NewCSVManager newCSVManager;
+    CSVManager newCSVManager;
     final String transactionFilePath = "database/transactions.csv";
 
     Transaction(){
-        newCSVManager = new NewCSVManager();
+        newCSVManager = new CSVManager();
     }
     public void generateTransactionId(String user){
         Random rand = new Random();
@@ -125,7 +124,7 @@ public class Transaction {
         columns.add("endTimeStamp");
         columns.add("executionTime");
         columns.add("queryType");
-        NewCSVManager newCSVManager = new NewCSVManager();
+        CSVManager newCSVManager = new CSVManager();
         if(newCSVManager.doesDataExistOnCondition(filepath,conditions,columns)){
             return true;
         }else{

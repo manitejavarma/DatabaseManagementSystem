@@ -4,32 +4,34 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVPrinter;
 import org.apache.commons.csv.CSVRecord;
-import tech.tablesaw.api.CategoricalColumn;
 import tech.tablesaw.api.Row;
 import tech.tablesaw.api.StringColumn;
 import tech.tablesaw.api.Table;
-import tech.tablesaw.columns.Column;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.nio.file.Files;
 import java.nio.file.Paths;
 import java.nio.file.StandardOpenOption;
 import java.util.*;
 
 //using tablesaw to do csv operations based on SQL query
-public class NewCSVManager {
+public class CSVManager {
 
     public void readCSV(String filepath, HashMap<String,String> conditions, ArrayList<String> columns) throws IOException {
         Table table = Table.read().csv(filepath);
         //conditions.forEach((k, v) -> table.where(table.stringColumn(k).isEqualTo(v)));
+
         for (Map.Entry<String, String> entry : conditions.entrySet()) {
             table = table.where(table.stringColumn(entry.getKey()).isEqualTo(entry.getValue()));
         }
         Table reduced = table.select(columns.toArray(new String[columns.size()]));
+        for(String column : columns){
+            System.out.print(column + "  ");
+        }
+        System.out.println("");
         for (Row row : reduced) {
             for(String column: columns){
-                System.out.print(row.getString(column));
+                System.out.print(row.getString(column) + "  ");
             }
             System.out.println("");
         }
@@ -63,18 +65,18 @@ public class NewCSVManager {
 
     public void updateCSV(String filepath, HashMap<String,String> conditions, HashMap<String,String> set) throws IOException{
             Table table = Table.read().csv(filepath);
-            boolean flag = true;
+            boolean matchesNotFound = true;
             for (Row row : table) {
                 for (Map.Entry<String, String> entry : conditions.entrySet()) {
                     if(row.getString(entry.getKey()).equals(entry.getValue())){
                         for (Map.Entry<String, String> entry2 : set.entrySet()) {
                             row.setString(entry2.getKey(), entry2.getValue());
                         }
-                        flag = false;
+                        matchesNotFound = false;
                     }
                 }
             }
-            if(flag){
+            if(matchesNotFound){
                 System.out.println("0 records matched.");
                 SemanticController semanticController = new SemanticController();
                 semanticController.rollback();
