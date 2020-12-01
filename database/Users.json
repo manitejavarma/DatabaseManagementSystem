@@ -3,24 +3,14 @@
     "username": "root",
     "password": "root",
     "database": [
-      "test",
-      "mani",
-      "shwetha",
-      "Mani",
-      "rajveen"
+      "CollegeDatabase"
     ]
   },
   {
     "username": "mani",
     "password": "pass",
     "database": [
-      "test",
-      "test3",
-      "test2",
-      "tes4",
-      "mani",
-      "shwetha",
-      "rajveen"
+
     ]
   }
 ]

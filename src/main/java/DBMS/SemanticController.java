@@ -32,13 +32,13 @@ public class SemanticController {
 
         //semantic check
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +"is not present in the table. Please retry");
+            System.out.println("table " + tableName +" is not present in the table. Please retry");
             return;
         }
         if(!columns[0].isEmpty()){
             for(String column: columns){
                 if(!metadataManager.columnExists(DBMS.getInstance().getActiveDatabase(),tableName,column)){
-                    System.out.println("column " + column +"is not present in the table. Please retry");
+                    System.out.println("column " + column +" is not present in the table. Please retry");
                     return;
                 }
             }
@@ -117,12 +117,12 @@ public class SemanticController {
 
         //semantic check
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +"is not present in the table. Please retry");
+            System.out.println("table " + tableName +" is not present in the table. Please retry");
             return;
         }
         for(String column: columns){
             if(!metadataManager.columnExists(DBMS.getInstance().getActiveDatabase(),tableName,column)){
-                System.out.println("column " + column +"is not present in the table. Please retry");
+                System.out.println("column " + column +" is not present in the table. Please retry");
                 return;
             }
         }
@@ -180,12 +180,12 @@ public class SemanticController {
         //semantic check
 
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +"is not present in the table. Please retry");
+            System.out.println("table " + tableName +" is not present in the table. Please retry");
             return;
         }
 
         if(!metadataManager.columnExists(DBMS.getInstance().getActiveDatabase(),tableName,deleteFields.get("whereColumn"))){
-            System.out.println("column " + deleteFields.get("whereColumn") +"is not present in the table. Please retry");
+            System.out.println("column " + deleteFields.get("whereColumn") +" is not present in the table. Please retry");
             return;
         }
 
@@ -241,13 +241,13 @@ public class SemanticController {
 
         //semantic check
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +"is not present in the database. Please retry");
+            System.out.println("table " + tableName +" is not present in the database. Please retry");
             return;
         }
 
         for(String column: columnsToSemanticCheck){
             if(!metadataManager.columnExists(DBMS.getInstance().getActiveDatabase(),tableName,column)){
-                System.out.println("column " + column +"is not present in the table. Please retry");
+                System.out.println("column " + column +" is not present in the table. Please retry");
                 return;
             }
         }

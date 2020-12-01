@@ -122,7 +122,6 @@ public class MetadataManager {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        UserControl.grantAccessToDatabase(userName,databaseName);
     }
 
     //Hey, please remove dummy metadata later :)
