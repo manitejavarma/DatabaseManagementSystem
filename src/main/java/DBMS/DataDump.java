@@ -7,7 +7,6 @@ import org.apache.commons.io.FileUtils;
 
 import java.io.File;
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
@@ -16,10 +15,10 @@ import java.util.stream.Collectors;
 
 public class DataDump {
 
-    NewCSVManager newCSVManager;
+    CSVManager newCSVManager;
 
     DataDump(){
-        newCSVManager = new NewCSVManager();
+        newCSVManager = new CSVManager();
     }
 
     private String insertValueDump(String databaseName, String tableName) throws IOException {

@@ -146,3 +146,17 @@
 2020-12-01 04:33:50,533 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE');from User root 
 2020-12-01 04:33:55,771 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE');from User root 
 2020-12-01 04:34:02,616 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
+2020-12-01 04:37:53,975 INFO DBMS.SqlParser validateQuery Query use rajveen;from User root 
+2020-12-01 04:38:03,433 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE');from User root 
+2020-12-01 04:38:09,593 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE1');from User root 
+2020-12-01 04:39:17,259 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE');from User root 
+2020-12-01 04:39:28,418 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
+2020-12-01 04:39:36,863 INFO DBMS.SqlParser validateQuery Query select * from student where name = "mani";from User root 
+2020-12-01 04:39:47,506 INFO DBMS.SqlParser validateQuery Query insert into student values('mani','CSE');from User root 
+2020-12-01 04:39:53,822 INFO DBMS.SqlParser validateQuery Query select * from student where name = "mani";from User root 
+2020-12-01 04:39:57,994 INFO DBMS.SqlParser validateQuery Query commit;from User root 
+2020-12-01 04:40:00,622 INFO DBMS.SqlParser validateQuery Query select * from student where name = "mani";from User root 
+2020-12-01 08:51:18,835 INFO DBMS.SqlParser validateQuery Query use rajveen;from User root 
+2020-12-01 08:51:25,030 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
+2020-12-01 08:51:30,304 INFO DBMS.SqlParser validateQuery Query select name from student where name = "mani";from User root 
+2020-12-01 08:51:42,458 INFO DBMS.SqlParser validateQuery Query select * from student where name = "mani";from User root 
