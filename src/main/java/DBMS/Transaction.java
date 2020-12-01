@@ -8,6 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 
 public class Transaction {
@@ -86,12 +87,9 @@ public class Transaction {
             replace(mainFile,copyFile);
             updateLog(TRANSACTION_STATE.COMMIT.name());
 
-            DBMS dbms = DBMS.getInstance();
-            Transaction transaction = new Transaction();
-            transaction.generateTransactionId(dbms.getUsername());
-            dbms.setTransactionId(transaction.getId());
 
-            dbms.getTables().remove(tableName);
+            DBMS dbms = DBMS.getInstance();
+            dbms.getTables().removeIf(n -> Objects.equals(n, tableName));
 
         }catch (Exception e){
             e.printStackTrace();
@@ -107,10 +105,7 @@ public class Transaction {
             updateLog(TRANSACTION_STATE.ROLLBACK.name());
 
             DBMS dbms = DBMS.getInstance();
-            Transaction transaction = new Transaction();
-            transaction.generateTransactionId(dbms.getUsername());
-            dbms.setTransactionId(transaction.getId());
-            dbms.getTables().remove(tableName);
+            dbms.getTables().removeIf(n -> Objects.equals(n, tableName));
         }catch (Exception e){
             e.printStackTrace();
         }

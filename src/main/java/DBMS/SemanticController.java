@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.*;
 
+//https://www.javacodeexamples.com/java-string-array-remove-duplicates-example/849#:~:text=1)%20Java%20String%20array%20remove,an%20array%20as%20given%20below.&text=*%20will%20automatically%20remove%20all%20duplicate%20elements.
 public class SemanticController {
 
     private static org.apache.log4j.Logger log = org.apache.log4j.Logger.getLogger(SemanticController.class);
@@ -42,25 +43,29 @@ public class SemanticController {
                 }
             }
         }
-
+        boolean tableAlreadyWithTransaction = false;
         if(transaction.checkIfAnyTransactionUsingSametable(tableName)){
-            System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
-            return;
+            if(DBMS.getInstance().getTables().contains(tableName)){
+                tableAlreadyWithTransaction = true;
+            }else{
+                System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
+                return;
+            }
         }
 
+        if(!tableAlreadyWithTransaction){
+            transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
+        }
 
-        transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
 
         HashMap<String,String> columnsAndValues = new HashMap<>();
         if(columns[0].isEmpty()){
             //Setting columns and values to insert into CSV
             List<String> allTableColumns = this.sqlToCSV.getHeaders(DBMS.getInstance().getActiveDatabase(),tableName);
-
             for(int i =0;i<allTableColumns.size();i++){
                 columnsAndValues.put(allTableColumns.get(i),values[i]);
             }
         }else{
-
             //Setting columns and values to insert into CSV
             for(int i =0;i<columns.length;i++){
                 columnsAndValues.put(columns[i],values[i]);
@@ -122,12 +127,19 @@ public class SemanticController {
             }
         }
 
+        boolean tableAlreadyWithTransaction = false;
         if(transaction.checkIfAnyTransactionUsingSametable(tableName)){
-            System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
-            return;
+            if(DBMS.getInstance().getTables().contains(tableName)){
+                tableAlreadyWithTransaction = true;
+            }else{
+                System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
+                return;
+            }
         }
 
-        transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
+        if(!tableAlreadyWithTransaction){
+            transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
+        }
 
         LocalDateTime startOfQuery  = java.time.LocalDateTime.now();
         //updating to Table
@@ -177,12 +189,19 @@ public class SemanticController {
             return;
         }
 
+        boolean tableAlreadyWithTransaction = false;
         if(transaction.checkIfAnyTransactionUsingSametable(tableName)){
-            System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
-            return;
+            if(DBMS.getInstance().getTables().contains(tableName)){
+                tableAlreadyWithTransaction = true;
+            }else{
+                System.out.println("table " + tableName + " is currently locked by other user. please try again later" );
+                return;
+            }
         }
 
-        transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
+        if(!tableAlreadyWithTransaction){
+            transaction.copyTable(DBMS.getInstance().getActiveDatabase(),tableName);
+        }
 
         LocalDateTime startOfQuery  = java.time.LocalDateTime.now();
         sqlToCSV.deleteRows(DBMS.getInstance().getActiveDatabase(),transaction.getCopyTableName(DBMS.getInstance().getActiveDatabase(),tableName),conditions);
@@ -209,6 +228,7 @@ public class SemanticController {
         List<String> columns = new ArrayList<>();
         ArrayList<String> columnsToSemanticCheck = new ArrayList<>();
         columnsToSemanticCheck.add(selectFields.get("whereColumn"));
+
         if(selectFields.get("selectColumn").contains("*")){
             columns = sqlToCSV.getHeaders(DBMS.getInstance().getActiveDatabase(), tableName);
         }else{
@@ -221,7 +241,7 @@ public class SemanticController {
 
         //semantic check
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +"is not present in the table. Please retry");
+            System.out.println("table " + tableName +"is not present in the database. Please retry");
             return;
         }
 
@@ -232,7 +252,9 @@ public class SemanticController {
             }
         }
 
-
+        if(transaction.checkIfAnyTransactionUsingSametable(tableName)){
+            tableName = transaction.getCopyTableName(DBMS.getInstance().getActiveDatabase(),tableName);
+        }
 
 
         sqlToCSV.selectTable(DBMS.getInstance().getActiveDatabase(),tableName, (ArrayList<String>) columns,conditions);
@@ -248,10 +270,16 @@ public class SemanticController {
                                 .length,
                         String[].class);
 
+       str =  Arrays.stream(str).distinct().toArray(String[]::new);
+
         for(String tableName : str){
             transaction.commit(databaseName,tableName);
         }
 
+        DBMS dbms = DBMS.getInstance();
+        Transaction transaction = new Transaction();
+        transaction.generateTransactionId(dbms.getUsername());
+        dbms.setTransactionId(transaction.getId());
     }
 
     public void rollback(){
@@ -262,10 +290,16 @@ public class SemanticController {
                 .copyOf(tables, tables
                                 .length,
                         String[].class);
+        str =  Arrays.stream(str).distinct().toArray(String[]::new);
 
         for(String tableName : str){
             transaction.rollback(databaseName,tableName);
         }
+
+        DBMS dbms = DBMS.getInstance();
+        Transaction transaction = new Transaction();
+        transaction.generateTransactionId(dbms.getUsername());
+        dbms.setTransactionId(transaction.getId());
     }
 
 }
