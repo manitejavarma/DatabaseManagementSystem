@@ -179,3 +179,68 @@
 2020-12-01 14:12:35,168 INFO Query generate erd CollegeDatabase;from User root 
 2020-12-01 14:16:45,798 INFO Query generate erd CollegeDatabase;from User root 
 2020-12-01 14:31:16,231 INFO Query generate erd CollegeDatabase;from User root 
+2020-12-01 15:26:45,421 INFO Query create database demo;from User root 
+2020-12-01 15:26:45,603 INFO New database created :demo by user root 
+2020-12-01 15:26:52,592 INFO Query grant demo to 'group11';from User root 
+2020-12-01 15:51:19,094 INFO Query use demo;from User root 
+2020-12-01 15:52:41,761 INFO Query use demo;from User root 
+2020-12-01 15:53:34,159 INFO Query create table student(name string,department string,primary key(name));from User root 
+2020-12-01 15:53:56,724 INFO Query use demo;from User root 
+2020-12-01 15:53:59,104 INFO Query create table student(name string,department string,primary key(name));from User root 
+2020-12-01 15:54:02,384 INFO New table created : student by user root 
+2020-12-01 15:54:40,986 INFO Query create table student(name string,department string,primary key(name));from User root 
+2020-12-01 15:54:56,565 INFO Query insert into student values('shwetha','CSE');from User root 
+2020-12-01 15:55:10,021 INFO Query insert into student values('rajveen','CSE');from User root 
+2020-12-01 15:55:16,439 INFO Query insert into student values('mani','Dentistry');from User root 
+2020-12-01 15:55:24,260 INFO Query insert into asdf values('mani','Dentistry');from User root 
+2020-12-01 15:57:22,852 INFO Query use demo;from User root 
+2020-12-01 15:57:36,288 INFO Query select * from student where name = "from User root 
+2020-12-01 15:57:44,478 INFO Query select * from student where name = "mani";from User root 
+2020-12-01 15:59:47,753 INFO Query use demo;from User root 
+2020-12-01 15:59:53,836 INFO Query create table student(name string,department string,primary key(name));from User root 
+2020-12-01 15:59:57,505 INFO New table created : student by user root 
+2020-12-01 16:00:13,474 INFO Query create table student(name string,department string,primary key(name));from User root 
+2020-12-01 16:00:19,928 INFO Query insert into student values('shwetha','CSE');from User root 
+2020-12-01 16:01:16,974 INFO Query insert into student values('rajveen','CSE');from User root 
+2020-12-01 16:03:21,037 INFO Query insert into student values('rajveen','CSE');from User root 
+2020-12-01 16:03:32,413 INFO Query insert into student values('mani','Dentistry');from User root 
+2020-12-01 16:04:57,123 INFO Query insert into student values('shwetha','CSE');from User root 
+2020-12-01 16:05:00,493 INFO Query use demo;from User root 
+2020-12-01 16:05:02,617 INFO Query insert into student values('shwetha','CSE');from User root 
+2020-12-01 16:05:08,755 INFO Query insert into student values('rajveen','CSE');from User root 
+2020-12-01 16:05:14,811 INFO Query insert into student values('mani','Dentistry');from User root 
+2020-12-01 16:05:22,137 INFO Query insert into asdf values('mani','Dentistry');from User root 
+2020-12-01 16:05:30,400 INFO Query update student set department = "CSE" where name = "mani"; from User root 
+2020-12-01 16:06:31,048 INFO Query update student set department = "CSE" where name = "mani";from User root 
+2020-12-01 16:06:47,115 INFO Query create database mani;from User root 
+2020-12-01 16:07:08,759 INFO Query select * from student where name = "mani";from User root 
+2020-12-01 16:07:21,220 INFO Query update student set department = "CSE" where age = "mani";from User root 
+2020-12-01 16:07:29,373 INFO Query delete from student where name = "rajveen";from User root 
+2020-12-01 16:07:29,469 INFO table deleted : student by user root 
+2020-12-01 16:07:35,933 INFO Query select * from student where name = "rajveen";from User root 
+2020-12-01 16:07:46,952 INFO Query select name from student where department = "CSE"; from User root 
+2020-12-01 16:07:56,649 INFO Query select name from student where department = "CSE";from User root 
+2020-12-01 16:37:02,469 INFO Query use demo;from User root 
+2020-12-01 16:40:10,565 INFO Query create table student(name string,department string,primary key(name));from User root 
+2020-12-01 16:40:12,197 INFO New table created : student by user root 
+2020-12-01 16:40:52,155 INFO Query create table student(name string,department string,primary key(name));from User root 
+2020-12-01 16:41:07,997 INFO Query insert into student values('shwetha','CSE');from User root 
+2020-12-01 16:41:48,462 INFO Query insert into student values('shwetha','CSE');from User root 
+2020-12-01 16:42:15,818 INFO Query insert into student values('rajveen','CSE');from User root 
+2020-12-01 16:42:22,064 INFO Query insert into student values('mani','Dentistry');from User root 
+2020-12-01 16:42:53,819 INFO Query update student set department = "CSE" where name = "mani";from User root 
+2020-12-01 16:43:22,596 INFO Query select * from student where name = "mani";from User root 
+2020-12-01 16:43:52,649 INFO Query update student set department = "CSE" where age = "mani";from User root 
+2020-12-01 16:44:12,005 INFO Query delete from student where name = "rajveen";from User root 
+2020-12-01 16:44:12,426 INFO table deleted : student by user root 
+2020-12-01 16:44:23,594 INFO Query select * from student where name = "rajveen";from User root 
+2020-12-01 16:44:45,761 INFO Query select name from student where department = "CSE";from User root 
+2020-12-01 16:47:15,358 INFO Query commit;from User root 
+2020-12-01 16:49:53,245 INFO Query use demo;from User group11 
+2020-12-01 16:50:12,491 INFO Query select * from student where name = "rajveen";from User group11 
+2020-12-01 16:53:10,037 INFO Query insert into student values('rajveen','CSE');from User group11 
+2020-12-01 16:54:14,731 INFO Query insert into student values('Mani2','Mech');from User group11 
+2020-12-01 16:54:27,491 INFO Query rollback;from User group11 
+2020-12-01 16:54:48,017 INFO Query insert into student values('rajveen','CSE');from User group11 
+2020-12-01 16:54:51,733 INFO Query commit;from User group11 
+2020-12-01 16:55:40,234 INFO Query insert into student values('rajveen','CSE');from User group11 

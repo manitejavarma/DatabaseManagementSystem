@@ -32,7 +32,7 @@ public class SemanticController {
 
         //semantic check
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +" is not present in the table. Please retry");
+            System.out.println("table " + tableName +" is not present in the database. Please retry");
             return;
         }
         if(!columns[0].isEmpty()){
@@ -117,7 +117,7 @@ public class SemanticController {
 
         //semantic check
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +" is not present in the table. Please retry");
+            System.out.println("table " + tableName +" is not present in the database. Please retry");
             return;
         }
         for(String column: columns){
@@ -155,7 +155,7 @@ public class SemanticController {
     public void createDatabase(String databaseName) throws IOException {
 
         if(metadataManager.databaseExists(DBMS.getInstance().getActiveDatabase())){
-            System.out.println("database " + databaseName +"already exists. Please retry");
+            System.out.println("database " + databaseName +" already exists. Please retry");
             return;
         }
 
@@ -180,7 +180,7 @@ public class SemanticController {
         //semantic check
 
         if(!metadataManager.tableExists(DBMS.getInstance().getActiveDatabase(),tableName)){
-            System.out.println("table " + tableName +" is not present in the table. Please retry");
+            System.out.println("table " + tableName +" is not present in the database. Please retry");
             return;
         }
 
