@@ -13,7 +13,6 @@ import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.sql.DataTruncation;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -60,7 +59,6 @@ public class MetadataManager {
         Map<String, List<Metadata>> dataDictionary = new HashMap<>();
 
         try (Stream<Path> paths = Files.walk(Paths.get("database"))) {
-//            paths.forEach(System.out::println);
             List<Path> pathList = paths.collect(Collectors.toList());
             pathList.remove(0);
 
@@ -124,7 +122,6 @@ public class MetadataManager {
         }
     }
 
-    //Hey, please remove dummy metadata later :)
     public void createTableMetadata(String databaseName, String tableName,Metadata metadata){
 
         Gson gson2 = new GsonBuilder()

@@ -27,7 +27,7 @@ public class App {
             do {
                 sqlParser.validateQuery(query);
                 query = ReadInput.readInput("Enter Query");
-            } while (query != "quit");
+            } while (!query.equals("quit"));
         }catch (Exception e){
             System.out.println("Exception occurred "+ e);
         }finally {
